@@ -1,110 +1,216 @@
+/**
+ * ================
+ * Radios to slider
+ * ================
+ *
+ * Markup :
+ *
+ * .radios-to-slider
+ *     .radio-to-slider__bar
+ *           .radio-to-slider__level (× N)
+ *           .radio-to-slider__fill
+ *               .radio-to-slider__knob
+ *     .radio-to-slider__labels
+ *         .radio-to-slider__label (× N)
+ */
+
+
+/* =========
+   Container
+   ========= */
+
+.radios-to-slider,
+.radios-to-slider * {
+    box-sizing: border-box;
+}
 .radios-to-slider {
-    background-color: #e0e0e0;
     display: block;
     position: relative;
-    margin-bottom: 80px;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    -o-box-sizing: content-box;
-    box-sizing: content-box;
-}
-
-.radios-to-slider.medium {
-    height: 22px;
-    -webkit-border-radius: 25px;
-    -moz-border-radius: 25px;
-    -o-border-radius: 25px;
-    border-radius: 25px;
-    padding: 5px;
+    margin-bottom: 1em;
 }
 
 
-/* Levels */
+/* ===
+   Bar
+   === */
 
-.radios-to-slider .slider-level {
+.radios-to-slider__bar {
+    z-index: 2;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1em;
+    background-color: #e0e0e0;
+    border-radius: 99em;
+}
+
+
+/* ======
+   Levels
+   ====== */
+
+.radios-to-slider__level {
+    z-index: 1;
     background-color: #fff;
     cursor: pointer;
-    position: absolute;
-    display: block;
+    border-radius: 99em;
+    transition: all 0.1s;
+}
+.radios-to-slider__level:hover,
+.radios-to-slider__level:active {
+    opacity: 1;
+    box-shadow: 0 0.1em 0.2em hsla(0, 0%, 0%, 0.15);
+    transform: scale(1.33);
 }
 
-.radios-to-slider .slider-level.slider-lower-level {
+.radios-to-slider__level_lower {
     opacity: 0.2;
 }
 
-.radios-to-slider.medium .slider-level {
-    width: 22px;
-    height: 22px;
-    -webkit-border-radius: 22px;
-    -moz-border-radius: 22px;
-    -o-border-radius: 22px;
-    border-radius: 22px;
-    z-index: 2;
-}
 
+/* ===========
+   Slider fill
+   =========== */
 
-/* Labels */
-
-.slider-label {
-    position: absolute;
-    display: block;
-    cursor: pointer;
-    color: #5e5e5e;
-    text-align: center;
-}
-
-.slider-label-active {
-    font-weight: bold;
-}
-
-.radios-to-slider.medium .slider-label {
-    top: 50px;
-    width: 44px;
-}
-
-
-/* Slider bar */
-
-.radios-to-slider .slider-bar {
+.radios-to-slider__fill {
+    z-index: 0;
     background-color: #00b4f1;
-    float: left;
-    height: 100%;
-    width: 0;
     pointer-events: none;
-    display: none;
+    visibility: hidden;
     position: absolute;
     left: 0;
     top: 0;
-    min-width: 32px !important;
+    bottom: 0;
+    min-width: 1.66em;
+    border-radius: 99em;
 }
 
-.slider-bar.transition-enabled {
-    -webkit-transition: .2s;
-    -moz-transition: .2s;
-    -o-transition: .2s;
-    transition: .2s;
-}
-
-.radios-to-slider.medium .slider-bar {
-    -webkit-border-radius: 22px;
-    -moz-border-radius: 22px;
-    -o-border-radius: 22px;
-    border-radius: 22px;
+.radios-to-slider__fill.transition-enabled {
+    transition: 0.2s;
 }
 
 
-/* Slider Knob */
+/* ===========
+   Slider Knob
+   =========== */
 
-.slider-knob {
+.radios-to-slider__knob {
+    z-index: 2;
     float: right;
-    background-color: #0977B5;
+    background-color: hsl(200, 100%, 33%);
+    border-radius: 99em;
 }
 
-.radios-to-slider.medium .slider-knob {
-    width: 32px;
-    height: 32px;
-    -webkit-border-radius: 25px;
-    -moz-border-radius: 25px;
-    -o-border-radius: 25px;
-    border-radius: 25px;
+
+/* ======
+   Labels
+   ====== */
+
+ .radios-to-slider__labels {
+    display: flex;
+}
+
+.radios-to-slider__label {
+    flex: 1 0 0px; /* 0px flex basis to force equal widths */
+    word-break: break-all;
+    overflow-wrap: anywhere; /* better than word-break, when supported */
+    cursor: pointer;
+    color: hsl(0, 0%, 33%);
+    text-align: center;
+}
+
+.radios-to-slider__label.active {
+    font-weight: bold;
+}
+
+
+/* =============
+   Size : medium
+   ============= */
+
+.radios-to-slider.medium .radios-to-slider__bar {
+    padding: 0.33em;
+}
+
+.radios-to-slider.medium .radios-to-slider__level {
+    width: 1.33em;
+    height: 1.33em;
+}
+
+.radios-to-slider.medium .radios-to-slider__fill {
+    min-width: 2em;
+}
+
+.radios-to-slider.medium .radios-to-slider__knob {
+    width: 2em;
+    height: 2em;
+}
+
+
+/* ============
+   Size : small
+   ============ */
+
+.radios-to-slider.small .radios-to-slider__bar {
+    padding: 0.2em;
+}
+
+.radios-to-slider.small .radios-to-slider__level {
+    width: 0.8em;
+    height: 0.8em;
+}
+
+.radios-to-slider.small .radios-to-slider__fill {
+    min-width: 1em;
+}
+
+.radios-to-slider.small .radios-to-slider__knob {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+
+/* ===========
+   Size : tiny
+   =========== */
+
+.radios-to-slider.tiny {
+    margin-top: 0.5em;
+}
+
+.radios-to-slider.tiny .radios-to-slider__bar {
+    padding: 0.1em;
+}
+
+.radios-to-slider.tiny .radios-to-slider__level {
+    position: relative;
+    width: 0.25em;
+    height: 0.25em;
+}
+
+.radios-to-slider.tiny .radios-to-slider__level:hover,
+.radios-to-slider.tiny .radios-to-slider__level:focus {
+    transform: scale(2);
+}
+
+/* Makes it easier to click */
+.radios-to-slider.tiny .radios-to-slider__level:before {
+    content: '';
+    position: absolute;
+    top: -0.6em;
+    right: -0.6em;
+    bottom: -0.6em;
+    left: -0.6em;
+    background: transparent;
+}
+
+.radios-to-slider.tiny .radios-to-slider__fill {
+    min-width: 0.35em;
+}
+
+.radios-to-slider.tiny .radios-to-slider__knob {
+    position: relative;
+    width: 1.5em;
+    height: 1.5em;
+    top: -0.55em;
 }
