@@ -1,0 +1,49 @@
+{
+  "name": "radios-to-slider",
+  "title": "RadiosToSlider",
+  "description": "jquery plugin to create a slider using a list of radio buttons",
+  "keywords": [
+    "slider",
+    "radio",
+    "buttons"
+  ],
+  "version": "0.3.2",
+  "author": {
+    "name": "Ruben Torres"
+  },
+  "maintainers": [{
+    "name": "Ruben Torres",
+    "email": "rubentdh@gmail.com",
+    "url": "https://rubentd.com"
+  }],
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://github.com/darthrubens/radios-to-slider/blob/master/LICENSE"
+  }],
+  "homepage": "https://rubentd.com/radios-to-slider",
+  "docs": "https://rubentd.com/radios-to-slider",
+  "download": "https://rubentd.com/radios-to-slider",
+  "peerDependencies": {
+    "jquery": ">=3.4.1"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-compass": "~1.0.3",
+    "grunt-contrib-concat": "~0.5.1",
+    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-contrib-cssmin": "^3.0.0",
+    "jshint-stylish": "~2.0.1",
+    "load-grunt-tasks": "^5.1.0",
+    "parallelshell": "^2.0.0",
+    "time-grunt": "^1.2.2"
+  },
+  "scripts": {
+    "test": "grunt jshint",
+    "build": "grunt build"
+  },
+  "files": [
+    "dist"
+  ]
+}

@@ -1,11 +1,6 @@
-/**
- * radiosToSlider v0.3.2
- * jquery plugin to create a slider using a list of radio buttons
- * (c)2014 Rubén Torres - rubentdlh@gmail.com
- * Released under the MIT license
- */
-
 (function($) {
+    'use strict';
+
     function RadiosToSlider(element, options) {
         this.bearer = element;
         this.options = options;
@@ -25,8 +20,6 @@
             this.setSlider();
             this.addInteraction();
             this.setDisabled();
-
-            var slider = this;
         },
 
         reset: function() {
@@ -47,26 +40,26 @@
             // this.bearer.css('width', '');
         },
 
-        //Add a container, a bar, wrappers for labels and radio inputs, and hides radio inputs
+        // Add a container, a bar, wrappers for labels and radio inputs, and hides radio inputs
         addBaseStyle: function() {
-            var label = 0,
-                slider = this;
+            var $bearer = this.bearer,
+                label = 0;
 
             // Container
-            this.bearer.addClass("radios-to-slider " + this.options.size);
+            $bearer.addClass('radios-to-slider ' + this.options.size);
             // Bar
             var $bar = $('<div class="radios-to-slider__bar">');
-            this.bearer.prepend($bar);
-            this.bearer.$bar = $bar;
+            $bearer.prepend($bar);
+            $bearer.$bar = $bar;
             // Inputs
-            var $inputs = this.bearer.find('input[type=radio]');
+            var $inputs = $bearer.find('input[type=radio]');
             var $inputsWrapper = $('<div class="radios-to-slider__inputs">').hide();
-            this.bearer.find($inputs).wrapAll($inputsWrapper);
-            this.bearer.$inputs = $inputs;
+            $bearer.find($inputs).wrapAll($inputsWrapper);
+            $bearer.$inputs = $inputs;
             // Labels
             var $labelsWrapper = $('<div class="radios-to-slider__labels">');
-            var $labels = this.bearer.find('label');
-            this.bearer.$labels = $labels;
+            var $labels = $bearer.find('label');
+            $bearer.$labels = $labels;
             $labels.each(function() {
                 var $this = $(this);
                 $this.addClass('radios-to-slider__label');
@@ -76,16 +69,14 @@
                 .css('padding-right', $bar.css('paddingRight'));
         },
 
-        //Add level indicators to DOM
+        // Add level indicators to DOM
         addLevels: function() {
             var $bearer = this.bearer,
-                level = 0,
-                slider = this,
                 $bar = $bearer.$bar;
 
-            $bearer.find('input[type=radio]').each(function(i) {
+            $bearer.find('input[type=radio]').each(function() {
                 var $this = $(this);
-                var $level = $("<ins class='radios-to-slider__level' data-radio='" + $this.attr('id') + "' data-value=" + $this.val() + "></ins>");
+                var $level = $('<ins class="radios-to-slider__level" data-radio="' + $this.attr('id') + '" data-value=' + $this.val() + '></ins>');
                 $bearer.append($level);
             });
             var $levels = $bearer.find('.radios-to-slider__level');
@@ -95,8 +86,8 @@
 
         //Add slider fill to DOM
         addFill: function() {
-            var $knob = $("<span class='radios-to-slider__knob'></span>");
-            var $fill = $("<ins class='radios-to-slider__fill'></ins>").append($knob);
+            var $knob = $('<span class="radios-to-slider__knob"></span>');
+            var $fill = $('<ins class="radios-to-slider__fill"></ins>').append($knob);
             this.bearer.$bar.append($fill);
             this.bearer.$fill = $fill;
             this.bearer.$knob = $knob;
@@ -115,8 +106,7 @@
                 label;
 
             $inputs.each(function() {
-                var $this = $(this),
-                    radioId = $this.attr('id');
+                var $this = $(this);
 
                 if ($this.prop('checked')) {
                     var value = $this.attr('value'),
@@ -124,7 +114,7 @@
                         levelPos = $level.position().left,
                         barWidth = $bar.width(),
                         knobWidth = $knob.width(),
-                        width = levelPos + (knobWidth/2);
+                        width = levelPos + (knobWidth/2),
                         widthPercent = 100 * width / barWidth;
 
                     $fill.css('visibility', 'visible');
@@ -149,7 +139,7 @@
                 if (label < slider.currentLevel) {
                     $this.css('visibility', 'visible');
                     $this.addClass('radios-to-slider__level_lower');
-                } else if (label == slider.currentLevel) {
+                } else if (label === slider.currentLevel) {
                     $this.css('visibility', 'hidden');
                 } else {
                     $this.css('visibility', 'visible');
@@ -164,7 +154,7 @@
 
                 var $this = $(this);
 
-                if (label == slider.currentLevel) {
+                if (label === slider.currentLevel) {
                     $this.addClass('active');
                 } else {
                     $this.removeClass('active');
@@ -225,8 +215,10 @@
 
         },
 
-        setDisabled: function(isDisable, cb) {
-            if (!this.options.isDisable) return;
+        setDisabled: function() {
+            if (!this.options.isDisable) {
+                return;
+            }
 
             this.setDisable();
         },
@@ -246,7 +238,7 @@
                 $this.off('click change');
             });
 
-            if (typeof cb === "function") {
+            if (typeof cb === 'function') {
                 cb($levels, $inputs);
             }
 
@@ -266,7 +258,7 @@
                 slider.addInteraction();
             });
 
-            if (typeof cb === "function") {
+            if (typeof cb === 'function') {
                 cb($levels, $inputs);
             }
 
