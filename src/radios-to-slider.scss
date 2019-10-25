@@ -23,194 +23,197 @@
 .radios-to-slider * {
     box-sizing: border-box;
 }
+
 .radios-to-slider {
     display: block;
     position: relative;
     margin-bottom: 1em;
-}
 
 
-/* ===
-   Bar
-   === */
+    /* ===
+       Bar
+       === */
 
-.radios-to-slider__bar {
-    z-index: 2;
-    position: relative;
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 1em;
-    background-color: #e0e0e0;
-    border-radius: 99em;
-}
-
-
-/* ======
-   Levels
-   ====== */
-
-.radios-to-slider__level {
-    z-index: 1;
-    background-color: #fff;
-    cursor: pointer;
-    border-radius: 99em;
-    transition: all 0.1s;
-}
-.radios-to-slider__level:hover,
-.radios-to-slider__level:active {
-    opacity: 1;
-    box-shadow: 0 0.1em 0.2em hsla(0, 0%, 0%, 0.15);
-    transform: scale(1.33);
-}
-
-.radios-to-slider__level_lower {
-    opacity: 0.2;
-}
+    &__bar {
+        z-index: 2;
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 1em;
+        background-color: #e0e0e0;
+        border-radius: 99em;
+    }
 
 
-/* ===========
-   Slider fill
-   =========== */
+    /* ======
+       Levels
+       ====== */
 
-.radios-to-slider__fill {
-    z-index: 0;
-    background-color: #00b4f1;
-    pointer-events: none;
-    visibility: hidden;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    min-width: 1.66em;
-    border-radius: 99em;
-}
+    &__level {
+        z-index: 1;
+        background-color: #fff;
+        cursor: pointer;
+        border-radius: 99em;
+        transition: all 0.1s;
 
-.radios-to-slider__fill.transition-enabled {
-    transition: 0.2s;
-}
+        &:hover,
+        &:active {
+            opacity: 1;
+            box-shadow: 0 0.1em 0.2em hsla(0, 0%, 0%, 0.15);
+            transform: scale(1.33);
+        }
 
-
-/* ===========
-   Slider Knob
-   =========== */
-
-.radios-to-slider__knob {
-    z-index: 2;
-    float: right;
-    background-color: hsl(200, 100%, 33%);
-    border-radius: 99em;
-}
+        // Levels under the fill
+        &.lower {
+            opacity: 0.2;
+        }
+    }
 
 
-/* ======
-   Labels
-   ====== */
+    /* ====
+       Fill
+       ==== */
 
- .radios-to-slider__labels {
-    display: flex;
-}
+    &__fill {
+        z-index: 0;
+        pointer-events: none;
+        visibility: hidden;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 99em;
+        background-color: hsl(200, 100%, 50%);
 
-.radios-to-slider__label {
-    flex: 1 0 0px; /* 0px flex basis to force equal widths */
-    word-break: break-all;
-    overflow-wrap: anywhere; /* better than word-break, when supported */
-    cursor: pointer;
-    color: hsl(0, 0%, 33%);
-    text-align: center;
-}
-
-.radios-to-slider__label.active {
-    font-weight: bold;
-}
-
-
-/* =============
-   Size : medium
-   ============= */
-
-.radios-to-slider.medium .radios-to-slider__bar {
-    padding: 0.33em;
-}
-
-.radios-to-slider.medium .radios-to-slider__level {
-    width: 1.33em;
-    height: 1.33em;
-}
-
-.radios-to-slider.medium .radios-to-slider__fill {
-    min-width: 2em;
-}
-
-.radios-to-slider.medium .radios-to-slider__knob {
-    width: 2em;
-    height: 2em;
-}
+        // When the `animation` option is enabled
+        &.transition-enabled {
+            transition: 0.2s;
+        }
+    }
 
 
-/* ============
-   Size : small
-   ============ */
+    /* ====
+       Knob
+       ==== */
 
-.radios-to-slider.small .radios-to-slider__bar {
-    padding: 0.2em;
-}
-
-.radios-to-slider.small .radios-to-slider__level {
-    width: 0.8em;
-    height: 0.8em;
-}
-
-.radios-to-slider.small .radios-to-slider__fill {
-    min-width: 1em;
-}
-
-.radios-to-slider.small .radios-to-slider__knob {
-    width: 1.2em;
-    height: 1.2em;
-}
+    &__knob {
+        z-index: 2;
+        float: right;
+        background-color: hsl(200, 100%, 33%);
+        border-radius: 99em;
+    }
 
 
-/* ===========
-   Size : tiny
-   =========== */
+    /* ======
+       Labels
+       ====== */
 
-.radios-to-slider.tiny {
-    margin-top: 0.5em;
-}
+    &__labels {
+        display: flex;
+    }
 
-.radios-to-slider.tiny .radios-to-slider__bar {
-    padding: 0.1em;
-}
+    &__label {
+        flex: 1 0 0px;
+        /* 0px flex basis to force equal widths */
+        word-break: break-all;
+        overflow-wrap: anywhere;
+        /* better than word-break, when supported */
+        cursor: pointer;
+        color: hsl(0, 0%, 33%);
+        text-align: center;
 
-.radios-to-slider.tiny .radios-to-slider__level {
-    position: relative;
-    width: 0.25em;
-    height: 0.25em;
-}
+        &.active {
+            font-weight: bold;
+        }
+    }
 
-.radios-to-slider.tiny .radios-to-slider__level:hover,
-.radios-to-slider.tiny .radios-to-slider__level:focus {
-    transform: scale(2);
-}
 
-/* Makes it easier to click */
-.radios-to-slider.tiny .radios-to-slider__level:before {
-    content: '';
-    position: absolute;
-    top: -0.6em;
-    right: -0.6em;
-    bottom: -0.6em;
-    left: -0.6em;
-    background: transparent;
-}
+    /* =============
+       Size : medium
+       ============= */
 
-.radios-to-slider.tiny .radios-to-slider__fill {
-    min-width: 0.35em;
-}
+    &.medium {
 
-.radios-to-slider.tiny .radios-to-slider__knob {
-    position: relative;
-    width: 1.5em;
-    height: 1.5em;
-    top: -0.55em;
+        .radios-to-slider__bar {
+            padding: 0.33em;
+        }
+
+        .radios-to-slider__level {
+            width: 1.33em;
+            height: 1.33em;
+        }
+
+        .radios-to-slider__knob {
+            width: 2em;
+            height: 2em;
+        }
+
+    }
+
+
+    /* ============
+       Size : small
+       ============ */
+
+    &.small {
+
+        .radios-to-slider__bar {
+            padding: 0.2em;
+        }
+
+        .radios-to-slider__level {
+            width: 0.8em;
+            height: 0.8em;
+        }
+
+        .radios-to-slider__knob {
+            width: 1.2em;
+            height: 1.2em;
+        }
+
+    }
+
+    /* ===========
+        Size : tiny
+        =========== */
+
+    &.tiny {
+
+        margin-top: 0.5em;
+
+        .radios-to-slider__bar {
+            padding: 0.1em;
+        }
+
+        .radios-to-slider__level {
+            position: relative;
+            width: 0.25em;
+            height: 0.25em;
+
+            &:hover,
+            &:focus {
+                transform: scale(2);
+            }
+
+            /* Makes it easier to click */
+            &:before {
+                content: '';
+                position: absolute;
+                top: -0.6em;
+                right: -0.6em;
+                bottom: -0.6em;
+                left: -0.6em;
+                background: transparent;
+            }
+        }
+
+        .radios-to-slider__knob {
+            position: relative;
+            width: 1.5em;
+            height: 1.5em;
+            top: -0.55em;
+        }
+
+    }
+
 }
