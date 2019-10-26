@@ -1,21 +1,22 @@
 {
-    "name": "radios-to-slider",
+    "name": "radioslider",
     "description": "jQuery plugin to create a slider using a list of radio buttons",
-    "title": "RadiosToSlider",
-    "version": "0.3.2",
+    "title": "Radioslider",
+    "version": "0.1.0",
     "authors": [
-        "Ruben Torres <rubentdh@gmail.com>"
+        "Ruben Torres <rubentdh@gmail.com>",
+        "tcharlss <bonjour@bravecassine.com>"
     ],
-    "main": "js/jquery.radios-to-slider.js",
+    "main": "js/jquery.radioslider.js",
     "keywords": [
         "slider",
         "radio",
         "buttons"
     ],
     "license": "MIT",
-    "homepage": "http://rubentd.com/radios-to-slider",
-    "docs": "http://rubentd.com/radios-to-slider",
-    "download": "http://rubentd.com/radios-to-slider",
+    "homepage": "https://bravecassine.com/radioslider",
+    "docs": "https://bravecassine.com/radioslider",
+    "download": "https://bravecassine.com/radioslider",
     "ignore": [
         "**/.*",
         "node_modules",
@@ -25,9 +26,9 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/rubentd/radios-to-slider.git"
+        "url": "git+https://github.com/tcharlss/radioslider.git"
     },
     "dependencies": {
-        "jquery": ">=1.5"
+        "jquery": ">=3.0"
     }
 }

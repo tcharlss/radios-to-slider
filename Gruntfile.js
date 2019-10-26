@@ -23,7 +23,7 @@ module.exports = function (grunt) {
             bannerz: '/**\n' +
             ' * <%= pkg.name %> v<%= pkg.version %>\n' +
             ' * jQuery plugin to create a slider using a list of radio buttons\n' +
-            ' * (c) <%= grunt.template.today("yyyy") %> rubentdlh@gmail.com\n' +
+            ' * (c) <%= grunt.template.today("yyyy") %> tcharlss\n' +
             ' * <%= pkg.license.type %> license\n' +
             ' */'
         },
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     // banner: '<%= meta.banner %>',
-                    // specify: '<%= config.src %>/radios-to-slider.scss',
+                    // specify: '<%= config.src %>/radioslider.scss',
                     debugInfo: false,
                     noLineComments: true
                 }
@@ -80,8 +80,8 @@ module.exports = function (grunt) {
                 banner: '<%= meta.banner %>'
             },
             dist: {
-                src: ['<%= config.src %>/jquery.radios-to-slider.js'],
-                dest: '<%= config.dist %>/jquery.radios-to-slider.js'
+                src: ['<%= config.src %>/jquery.radioslider.js'],
+                dest: '<%= config.dist %>/jquery.radioslider.js'
             }
         },
 
@@ -91,8 +91,8 @@ module.exports = function (grunt) {
                 banner: '<%= meta.banner %>'
             },
             dist: {
-                src: ['<%= config.dist %>/jquery.radios-to-slider.js'],
-                dest: '<%= config.dist %>/jquery.radios-to-slider.min.js'
+                src: ['<%= config.dist %>/jquery.radioslider.js'],
+                dest: '<%= config.dist %>/jquery.radioslider.min.js'
             }
         },
 
@@ -102,8 +102,8 @@ module.exports = function (grunt) {
                 banner: '<%= meta.banner %>'
             },
             dist: {
-                src: ['<%= config.dist %>/radios-to-slider.css'],
-                dest: '<%= config.dist %>/radios-to-slider.min.css'
+                src: ['<%= config.dist %>/radioslider.css'],
+                dest: '<%= config.dist %>/radioslider.min.css'
             }
         },
 
