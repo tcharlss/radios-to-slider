@@ -290,6 +290,15 @@
         return this.value;
     };
 
+    // Set the value
+    Plugin.prototype.setValue = function(value) {
+        if (value !== this.value) {
+            this.$inputs
+                .filter('[value=' + value + ']')
+                .trigger('click');
+        }
+    };
+
     // Destroy (WIP)
     Plugin.prototype.destroy = function() {
         this.$document.off('.' + this.identifier);
@@ -337,7 +346,7 @@
             }
 
             // Make it possible to access methods from public.
-            // e.g `$element.rangeslider('method');`
+            // e.g `$element.radioslider('method');`
             if (typeof options === 'string') {
                 data[options].apply(data, args);
             }
