@@ -19,6 +19,7 @@
 $radioslider: (
     bar-color:  hsl(0, 0%, 90%),
     fill-color: hsl(220, 100%, 60%),
+    fill-color-inverse: hsl(10, 75%, 60%),
     handle-color: hsl(220, 100%, 30%),
     default: (
         dot-size: 1.5em, // Dots width and height
@@ -56,6 +57,7 @@ $radioslider: (
     /* Color variables */
     --bar-color: #{map-get($radioslider, bar-color)};
     --fill-color: #{map-get($radioslider, fill-color)};
+    --fill-color-inverse: #{map-get($radioslider, fill-color-inverse)};
     --handle-color: #{map-get($radioslider, handle-color)};
 
     /* Default size variables */
@@ -168,7 +170,7 @@ $radioslider: (
         height: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
         height: calc(var(--dot-size) + (var(--bar-padding) * 2));
         border-radius: 99em;
-        background-color: map-get($radioslider, bar-color);; // old browsers
+        background-color: map-get($radioslider, bar-color); // old browsers
         background-color: var(--bar-color);
     }
 
@@ -178,17 +180,24 @@ $radioslider: (
         position: absolute;
         height: 100%;
         border-radius: 99em;
-        background-color: map-get($radioslider, fill-color);; // old browsers
+        background-color: map-get($radioslider, fill-color); // old browsers
         background-color: var(--fill-color);
 
         // When the `animation` option is enabled
-        &.transition-enabled {
+        &.animated {
             transition: 0.2s ease-out;
+        }
+
+        // Inverse direction
+        &.inverse {
+            background-color: map-get($radioslider, fill-color-inverse); // old browsers
+            background-color: var(--fill-color-inverse);
         }
     }
 
     &__handle {
-        float: right;
+        // float: right;
+        position: absolute;
         width: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
         height: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
         width: calc(var(--dot-size) + (var(--bar-padding) * 2));
@@ -196,6 +205,11 @@ $radioslider: (
         background-color: map-get($radioslider, handle-color);; // old browsers
         background-color: var(--handle-color);
         border-radius: 99em;
+
+        // When the `animation` option is enabled
+        &.animated {
+            transition: 0.2s ease-out;
+        }
     }
 
     /* ========
