@@ -25,9 +25,9 @@
             verticalClass:   'radioslider_vertical',
             disabledClass:   'radioslider_disabled',
             fitClass:        'radioslider_fit',
+            animationClass:  'radioslider_animated',
             labelLowerClass: 'lower',
-            animationClass:  'animated',
-            inverseClass:    'inverse',
+            barInverseClass:    'inverse',
         },
         constants = {
             orientation: {
@@ -63,7 +63,7 @@
         this.COORDINATE      = constants.orientation[this.orientation].coordinate;
 
         this.identifier      = 'js-' + pluginName + '-' +(pluginIdentifier++);
-        this.currentLevel    = 0; // This means no level selected
+        this.level           = 0; // This means no level selected
         this.value           = null;
         this.levelsCount     = this.$bearer.find('input[type=radio]').length;
         // this.$item        = $('<div class="' + this.options.itemClass + '">');
@@ -72,7 +72,9 @@
         this.$bar            = $('<div class="' + this.options.barClass + '">');
         this.$fill           = $('<div class="' + this.options.fillClass + '">');
         this.$handle         = $('<span class="' + this.options.handleClass + '">');
-        this.$bar.append(this.$fill).append(this.$handle);
+        this.$bar
+            .append(this.$fill.css('visibility', 'hidden'))
+            .append(this.$handle);
 
         this.init();
     }
@@ -99,8 +101,6 @@
         var options = this.options,
             $bearer = this.$bearer,
             $bar    = this.$bar,
-            $fill   = this.$fill,
-            $handle = this.$handle,
             $items,
             $inputs,
             $labels,
@@ -112,6 +112,7 @@
                 options.sliderClass +
                 ' ' + options[this.orientation + 'Class'] +
                 ' ' + (options.fit ? options.fitClass : '') +
+                ' ' + (options.animation ? options.animationClass : '') +
                 ' ' + options.size
             )
             .attr('data-radioslider', this.identifier);
@@ -146,7 +147,6 @@
 
                 $(this)
                     .addClass(options.labelClass)
-                    // .attr('data-level', i+1)
                     .html('')
                     .append($dot)
                     .append($text);
@@ -168,10 +168,6 @@
 
         // Bar
         $bearer.append($bar);
-        if (this.options.animation) {
-            $fill.addClass(this.options.animationClass);
-            $handle.addClass(this.options.animationClass);
-        }
     };
 
     // Update the fill bar and current level based on checked radio
@@ -179,19 +175,20 @@
         var $inputChecked = this.$inputs.filter(':checked');
 
         if ($inputChecked.length > 0) {
-            var slider     = this,
-                options    = this.options,
+            var options    = this.options,
                 $inputs    = this.$inputs,
+                $bar       = this.$bar,
                 $fill      = this.$fill,
                 $handle    = this.$handle,
                 fillOrigin = options.fillOrigin,
                 fillOffset = options.fillOffset,
-                originPos,
+                originLevel,
                 currentLevel,
                 currentValue,
-                dotPosOffset,
-                dotPosOffsetDiff,
                 dotPos,
+                originPos,
+                handlePosOffset,
+                barPosOffset,
                 fillDimension,
                 fillDirection,
                 input;
@@ -200,51 +197,67 @@
             currentLevel     = Number($inputChecked.attr('data-level'));
             currentValue     = this.getValueFromLevel(currentLevel);
             dotPos           = this.getPositionFromValue(currentValue);
-            dotPosOffset     = this.getPositionOffsetFromValue(currentValue);
-            dotPosOffsetDiff = this.getPositionOffsetFromValue(currentValue, true);
-            
+            handlePosOffset  = this.getHandlePositionOffset();
+            barPosOffset     = this.getBarPositionOffset();
 
             // If different fill origin
-            if (fillOrigin && (originPos = this.getPositionFromValue(fillOrigin))) {
-                var originLevel = this.getLevelFromValue(fillOrigin);
-                // positive
-                if (this.orientation === 'horizontal' && currentLevel >= originLevel) {
-                    fillDirection = originPos - dotPosOffsetDiff;
-                    fillDimension = dotPos - originPos + dotPosOffset + dotPosOffsetDiff;
-                    $fill.removeClass(options.inverseClass);
-                // inverse
-                } else if (this.orientation === 'horizontal' && currentLevel < originLevel) {
-                    fillDirection = dotPos - dotPosOffsetDiff;
-                    fillDimension = originPos - dotPos + dotPosOffset + dotPosOffsetDiff;
-                    $fill.addClass(options.inverseClass);
-                // vertical positive
-                } else if (this.orientation === 'vertical' && currentLevel >= originLevel) {
-                    fillDirection = originPos + dotPosOffset;
-                    fillDimension = dotPos - originPos + dotPosOffset;
-                    $fill.removeClass(options.inverseClass);
-                // vertical inverse
+            if (
+                fillOrigin && (originPos = this.getPositionFromValue(fillOrigin))
+                || fillOffset && (originPos = this.getPositionFromValue(fillOffset))
+            ) {
+                originLevel = fillOrigin ? this.getLevelFromValue(fillOrigin) : this.getLevelFromValue(fillOffset);
+                $fill.css('opacity', '');
+                // Positive direction
+                if (currentLevel >= originLevel) {
+                    $bar.removeClass(options.barInverseClass);
+                    switch (this.orientation) {
+                        case 'horizontal':
+                            fillDirection = originPos - barPosOffset;
+                            fillDimension = dotPos - originPos + (barPosOffset * 2);
+                            break;
+                        case 'vertical':
+                            fillDirection = originPos;
+                            fillDimension = dotPos - originPos;
+                            break;
+                    }
+                // Inverse with fillorigin
+                } else if (fillOrigin) {
+                    $bar.addClass(options.barInverseClass);
+                    switch (this.orientation) {
+                        case 'horizontal':
+                            fillDirection = dotPos - barPosOffset;
+                            fillDimension = originPos - dotPos + (barPosOffset * 2);
+                            break;
+                        case 'vertical':
+                            fillDirection = dotPos;
+                            fillDimension = originPos + dotPos;
+                            break;
+                    }
+                // Inverse with filloffset
                 } else {
-                    fillDirection = dotPos + dotPosOffset;
-                    fillDimension = originPos + dotPos;
-                    $fill.addClass(options.inverseClass);
+                    $fill.css('opacity', 0);
+                    fillDirection = dotPos - barPosOffset;
+                    fillDimension = barPosOffset * 2;
                 }
             // If normal origin
             } else  {
-                fillDimension = dotPos + dotPosOffset;
+                fillDimension = dotPos + barPosOffset;
                 fillDirection = 0;
             }
 
             // Show the fill bar and sets its width
-            $fill.css('visibility', 'visible');
-            $fill[0].style[slider.DIMENSION] = this.dimensionToPercent(fillDimension) + '%';
-            $fill[0].style[slider.DIRECTION_STYLE] = this.dimensionToPercent(fillDirection) + '%';
-            $handle[0].style[slider.DIRECTION_STYLE] = this.dimensionToPercent(dotPos - dotPosOffsetDiff) + '%';
+            $fill.css('visibility', '');
+            $fill[0].style[this.DIMENSION] = this.dimensionToPercent(fillDimension) + '%';
+            $fill[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(fillDirection) + '%';
+            $handle[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(dotPos - handlePosOffset) + '%';
 
             // Update value
-            slider.currentLevel = currentLevel;
+            this.level = currentLevel;
+            this.value = currentValue;
 
             // Set style for lower levels
             input = 0;
+            var baseLevel = originLevel ? originLevel : currentLevel;
             $inputs.each(function() {
                 input++;
 
@@ -253,13 +266,16 @@
                     $dot   = $this.next('label').find('.' + options.dotClass),
                     level  = Number($this.attr('data-level'));
 
-                if (level < slider.currentLevel) {
-                    $dot.css('visibility', '');
+                // Lower levels
+                if (level < currentLevel) {
+                    $dot.css('opacity', '');
                     $label.addClass(options.labelLowerClass);
-                } else if (level === slider.currentLevel) {
-                    // $dot.css('visibility', 'hidden');
-                } else {
-                    $dot.css('visibility', '');
+                // Current level
+                } else if (level === currentLevel) {
+                    $dot.css('opacity', '0');
+                // Higher levels
+                } else if (level > currentLevel) {
+                    $dot.css('opacity', '');
                     $label.removeClass(options.labelLowerClass);
                 }
             });
@@ -374,45 +390,54 @@
         return value;
     };
 
-    // Get the position of the dot corresponding to a value
+    // Get the position of center of the dot corresponding to a value
     Plugin.prototype.getPositionFromValue = function(value) {
-        var position, $dot;
+        var position, dimensions, dimension, $dot;
 
         if (($dot = this.$dots.filter('[data-value=' + value + ']')) && $dot.length > 0) {
-            position = $dot.position()[this.DIRECTION_STYLE];
+            dimensions = {
+                width:  $dot.outerWidth(),
+                height: $dot.outerHeight(),
+            };
+            dimension = dimensions[this.DIMENSION];
+            position = $dot.position()[this.DIRECTION_STYLE] + dimension/2;
         }
         position = (!Number.isNaN(position)) ? position : 0;
 
         return position;
     };
 
-    // Get the position offset of the dot corresponding to a value
-    // Eg. what is necessary to center the handle with the dot
-    Plugin.prototype.getPositionOffsetFromValue = function(value, inverse) {
-        var $dot,
-            level,
-            dotDimensions,
-            handleDimensions,
-            dotDimension,
+    // Get the position offset of the handle (eg. half its length)
+    Plugin.prototype.getHandlePositionOffset = function() {
+        var handleDimensions,
             handleDimension,
             offset;
 
-        level         = this.getLevelFromValue(value);
-        $dot          = this.$dots.filter('[data-level=' + level + ']');
-        dotDimensions = {
-            width:  $dot.outerWidth(),
-            height: $dot.outerHeight(),
-        };
         handleDimensions = {
             width:  this.$handle.outerWidth(),
             height: this.$handle.outerHeight(),
         };
-        dotDimension    = dotDimensions[this.DIMENSION];
         handleDimension = handleDimensions[this.DIMENSION];
-        offset          = inverse ?
-            ((handleDimension/2) - (dotDimension/2)) :
-            ((handleDimension/2) + (dotDimension/2));
+        offset          = handleDimension / 2;
         offset          = (!Number.isNaN(offset)) ? offset : 0;
+
+        return offset;
+    };
+
+    // Get the position offset of the bar (eg. half its length)
+    Plugin.prototype.getBarPositionOffset = function() {
+        var barDimensions,
+            barDimension,
+            offset;
+
+        // Yes, dimensions are switched on purpose
+        barDimensions = {
+            width:  this.$bar.outerHeight(),
+            height: this.$bar.outerWidth(),
+        };
+        barDimension = barDimensions[this.DIMENSION];
+        offset       = barDimension / 2;
+        offset       = (!Number.isNaN(offset)) ? offset : 0;
 
         return offset;
     };
