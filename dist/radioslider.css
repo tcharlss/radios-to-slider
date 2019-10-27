@@ -6,14 +6,14 @@
  * Markup :
  *
  * div.radioslider
- *     div.radioslider__option
+ *     div.radioslider__item
  *           input.radioslider__input
  *           label.radioslider__label
  *               span.radioslider__dot
  *               span.radioslider__text
  *     div.radioslider__bar
  *         div.radioslider__fill
- *               span.radioslider__knob
+ *               span.radioslider__handle
  */
 /* =========
    Container
@@ -32,7 +32,8 @@
   /* Color variables */
   --bar-color: #e6e6e6;
   --fill-color: #3377ff;
-  --knob-color: #003399;
+  --fill-color-inverse: #e6664d;
+  --handle-color: #003399;
   /* Default size variables */
   --dot-size: 1.5em;
   --bar-padding: 0.25em;
@@ -49,7 +50,7 @@
      Options, inputs & labels
      ======================== */
   /* =================
-     Bar + fill + knob
+     Bar + fill + handle
      ================= */
   /* ========
      Disabled
@@ -64,7 +65,7 @@
       Size : tiny
       =========== */
 }
-.radioslider__option {
+.radioslider__item {
   z-index: 1;
   flex: 1 0 0px;
   /* 0px flex basis to force equal widths */
@@ -76,7 +77,7 @@
 }
 .radioslider__input:checked + .radioslider__label .radioslider__dot {
   background-color: #003399;
-  background-color: var(--knob-color);
+  background-color: var(--handle-color);
 }
 .radioslider__label {
   display: flex;
@@ -85,8 +86,7 @@
   cursor: pointer;
 }
 .radioslider__label:hover .radioslider__dot, .radioslider__label:focus .radioslider__dot, .radioslider__label:focus-within .radioslider__dot {
-  transform: scale(1.25);
-  box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.33);
 }
 .radioslider__label.lower .radioslider__dot {
   opacity: 0.2;
@@ -99,9 +99,9 @@
   height: var(--dot-size);
   background-color: white;
   border-radius: 99em;
-  transition: all 0.2s;
+  transition: all 0.1s;
 }
-.radioslider__content {
+.radioslider__text {
   display: block;
   margin-top: 1.25em;
   margin-top: calc(var(--bar-padding) + var(--bar-margin-bottom));
@@ -131,55 +131,62 @@
   background-color: #3377ff;
   background-color: var(--fill-color);
 }
-.radioslider__fill.transition-enabled {
-  transition: 0.2s;
+.radioslider__fill.animated {
+  transition: 0.2s ease-out;
 }
-.radioslider__knob {
-  float: right;
+.radioslider__fill.inverse {
+  background-color: #e6664d;
+  background-color: var(--fill-color-inverse);
+}
+.radioslider__handle {
+  position: absolute;
   width: 2em;
-  width: calc(var(--dot-size) + (var(--bar-padding) * 2));
   height: 2em;
+  width: calc(var(--dot-size) + (var(--bar-padding) * 2));
   height: calc(var(--dot-size) + (var(--bar-padding) * 2));
   background-color: #003399;
-  background-color: var(--knob-color);
+  background-color: var(--handle-color);
   border-radius: 99em;
 }
-.radioslider.disabled .radioslider__input,
-.radioslider.disabled .radioslider__label {
+.radioslider__handle.animated {
+  transition: 0.2s ease-out;
+}
+.radioslider_disabled .radioslider__input,
+.radioslider_disabled .radioslider__label {
   pointer-events: none;
 }
-.radioslider.disabled .radioslider__option {
+.radioslider_disabled .radioslider__item {
   cursor: not-allowed;
 }
-.radioslider.fit-borders .radioslider__option {
+.radioslider_fit .radioslider__item {
   flex-grow: 0;
 }
-.radioslider.fit-borders .radioslider__content {
+.radioslider_fit .radioslider__text {
   width: 400%;
 }
 .radioslider.small {
-  --dot-size: 0.5em;
+  --dot-size: 0.7em;
   --bar-padding: 0.15em;
   --bar-margin-bottom: 1em;
 }
 .radioslider.small .radioslider__dot {
-  width: 0.5em;
-  height: 0.5em;
+  width: 0.7em;
+  height: 0.7em;
   width: var(--dot-size);
   height: var(--dot-size);
 }
-.radioslider.small .raioslider__content {
+.radioslider.small .radioslider__text {
   margin-top: 1.15em;
   margin-top: calc(var(--bar-padding) + var(--bar-margin-bottom));
 }
-.radioslider.small .raioslider__bar {
-  height: 0.8em;
+.radioslider.small .radioslider__bar {
+  height: 1em;
   height: calc(var(--dot-size) + (var(--bar-padding) * 2));
 }
-.radioslider.small .radioslider__knob {
-  width: 0.8em;
+.radioslider.small .radioslider__handle {
+  width: 1em;
+  height: 1em;
   width: calc(var(--dot-size) + (var(--bar-padding) * 2));
-  height: 0.8em;
   height: calc(var(--dot-size) + (var(--bar-padding) * 2));
 }
 .radioslider.tiny {
@@ -193,7 +200,7 @@
   width: var(--dot-size);
   height: var(--dot-size);
 }
-.radioslider.tiny .radioslider__content {
+.radioslider.tiny .radioslider__text {
   margin-top: 1.1em;
   margin-top: calc(var(--bar-padding) + var(--bar-margin-bottom));
 }
@@ -201,10 +208,10 @@
   height: 0.4em;
   height: calc(var(--dot-size) + (var(--bar-padding) * 2));
 }
-.radioslider.tiny .radioslider__knob {
+.radioslider.tiny .radioslider__handle {
   width: 1.6em;
-  width: calc((var(--dot-size) + (var(--bar-padding) * 2)) * 4);
   height: 1.6em;
+  width: calc((var(--dot-size) + (var(--bar-padding) * 2)) * 4);
   height: calc((var(--dot-size) + (var(--bar-padding) * 2)) * 4);
   transform: translateY(calc(-50% + (var(--bar-height)/2)));
 }
