@@ -6,27 +6,27 @@
  * Markup :
  *
  * div.radioslider
- *     div.radioslider__option
+ *     div.radioslider__item
  *           input.radioslider__input
  *           label.radioslider__label
  *               span.radioslider__dot
  *               span.radioslider__text
  *     div.radioslider__bar
  *         div.radioslider__fill
- *               span.radioslider__knob
+ *               span.radioslider__handle
  */
 @import "mixins";
 $radioslider: (
     bar-color:  hsl(0, 0%, 90%),
     fill-color: hsl(220, 100%, 60%),
-    knob-color: hsl(220, 100%, 30%),
+    handle-color: hsl(220, 100%, 30%),
     default: (
         dot-size: 1.5em, // Dots width and height
         bar-padding: 0.25em, // bar padding
         bar-margin-bottom: 1em, // Distance between bar and labels
     ),
     small: (
-        dot-size: 0.5em,
+        dot-size: 0.7em,
         bar-padding: 0.15em,
         bar-margin-bottom: 1em,
     ),
@@ -56,7 +56,7 @@ $radioslider: (
     /* Color variables */
     --bar-color: #{map-get($radioslider, bar-color)};
     --fill-color: #{map-get($radioslider, fill-color)};
-    --knob-color: #{map-get($radioslider, knob-color)};
+    --handle-color: #{map-get($radioslider, handle-color)};
 
     /* Default size variables */
     --dot-size: #{map-deep-get($radioslider, default, dot-size)};
@@ -79,7 +79,7 @@ $radioslider: (
 
 
     // Radio inputs and labels container
-    &__option {
+    &__item {
         z-index: 1;
         flex: 1 0 0px; /* 0px flex basis to force equal widths */
         display: flex;
@@ -95,8 +95,8 @@ $radioslider: (
             font-weight: bold;
 
             .radioslider__dot {
-                background-color: map-get($radioslider, knob-color);; // old browsers
-                background-color: var(--knob-color);
+                background-color: map-get($radioslider, handle-color);; // old browsers
+                background-color: var(--handle-color);
             }
         }
     }
@@ -113,8 +113,8 @@ $radioslider: (
         &:focus,
         &:focus-within {
             .radioslider__dot {
-                transform: scale(1.25);
-                box-shadow: 0 0.1em 0.2em hsla(0, 0%, 0%, 0.25);
+                // transform: scale(1.25);
+                box-shadow: 0 0.1em 0.2em hsla(0, 0%, 0%, 0.33);
             }
         }
 
@@ -133,17 +133,17 @@ $radioslider: (
     // They visually replace the radio inputs
     &__dot {
         display: block;
-        width: map-deep-get($radioslider, default, dot-size); // old browser
-        height: map-deep-get($radioslider, default, dot-size); // old browser
+        width: map-deep-get($radioslider, default, dot-size); // old browsers
+        height: map-deep-get($radioslider, default, dot-size); // old browsers
         width: var(--dot-size);
         height: var(--dot-size);
         background-color: white;
         border-radius: 99em;
-        transition: all 0.2s;
+        transition: all 0.1s;
     }
 
     // Labels text
-    &__content {
+    &__text {
         display: block;
         margin-top: map-deep-get($radioslider, default, bar-padding) + map-deep-get($radioslider, default, bar-margin-bottom);
         margin-top: calc(var(--bar-padding) + var(--bar-margin-bottom));
@@ -154,12 +154,13 @@ $radioslider: (
 
 
     /* =================
-       Bar + fill + knob
+       Bar + fill + handle
        ================= */
 
 
     &__bar {
         z-index: 0;
+        // overflow: hidden;
         position: absolute;
         top: 0;
         left: 0;
@@ -182,18 +183,18 @@ $radioslider: (
 
         // When the `animation` option is enabled
         &.transition-enabled {
-            transition: 0.2s;
+            transition: 0.2s ease-out;
         }
     }
 
-    &__knob {
+    &__handle {
         float: right;
         width: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
-        width: calc(var(--dot-size) + (var(--bar-padding) * 2));
         height: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
+        width: calc(var(--dot-size) + (var(--bar-padding) * 2));
         height: calc(var(--dot-size) + (var(--bar-padding) * 2));
-        background-color: map-get($radioslider, knob-color);; // old browsers
-        background-color: var(--knob-color);
+        background-color: map-get($radioslider, handle-color);; // old browsers
+        background-color: var(--handle-color);
         border-radius: 99em;
     }
 
@@ -201,12 +202,12 @@ $radioslider: (
        Disabled
        ======== */
 
-    &.disabled {
+    &_disabled {
         .radioslider__input,
         .radioslider__label {
             pointer-events: none;
         }
-        .radioslider__option {
+        .radioslider__item {
             cursor: not-allowed;
         }
     }
@@ -215,12 +216,12 @@ $radioslider: (
        Fit borders
        =========== */
 
-    &.fit-borders {
-        .radioslider__option {
+    &_fit {
+        .radioslider__item {
             flex-grow: 0;
         }
         // Arbitrary larger width for label text
-        .radioslider__content {
+        .radioslider__text {
             width: 400%;
         }
     }
@@ -237,26 +238,26 @@ $radioslider: (
         --bar-margin-bottom: #{map-deep-get($radioslider, small, bar-margin-bottom)};
 
         .radioslider__dot {
-            width: map-deep-get($radioslider, small, dot-size); // old browser
-            height: map-deep-get($radioslider, small, dot-size); // old browser
+            width: map-deep-get($radioslider, small, dot-size); // old browsers
+            height: map-deep-get($radioslider, small, dot-size); // old browsers
             width: var(--dot-size);
             height: var(--dot-size);
         }
 
-        .raioslider__content {
+        .radioslider__text {
             margin-top: map-deep-get($radioslider, small, bar-padding) + map-deep-get($radioslider, small, bar-margin-bottom);
             margin-top: calc(var(--bar-padding) + var(--bar-margin-bottom));
         }
 
-        .raioslider__bar {
+        .radioslider__bar {
             height: map-deep-get($radioslider, small, dot-size) + (map-deep-get($radioslider, small, bar-padding) * 2); // old browsers
             height: calc(var(--dot-size) + (var(--bar-padding) * 2));
         }
 
-        .radioslider__knob {
+        .radioslider__handle {
             width: map-deep-get($radioslider, small, dot-size) + (map-deep-get($radioslider, small, bar-padding) * 2); // old browsers
-            width: calc(var(--dot-size) + (var(--bar-padding) * 2));
             height: map-deep-get($radioslider, small, dot-size) + (map-deep-get($radioslider, small, bar-padding) * 2); // old browsers
+            width: calc(var(--dot-size) + (var(--bar-padding) * 2));
             height: calc(var(--dot-size) + (var(--bar-padding) * 2));
         }
     }
@@ -273,13 +274,13 @@ $radioslider: (
         --bar-margin-bottom: #{map-deep-get($radioslider, tiny, bar-margin-bottom)};
 
         .radioslider__dot {
-            width: map-deep-get($radioslider, tiny, dot-size); // old browser
-            height: map-deep-get($radioslider, tiny, dot-size); // old browser
+            width: map-deep-get($radioslider, tiny, dot-size); // old browsers
+            height: map-deep-get($radioslider, tiny, dot-size); // old browsers
             width: var(--dot-size);
             height: var(--dot-size);
         }
 
-        .radioslider__content {
+        .radioslider__text {
             margin-top: map-deep-get($radioslider, tiny, bar-padding) + map-deep-get($radioslider, tiny, bar-margin-bottom);
             margin-top: calc(var(--bar-padding) + var(--bar-margin-bottom));
         }
@@ -289,11 +290,11 @@ $radioslider: (
             height: calc(var(--dot-size) + (var(--bar-padding) * 2));
         }
 
-        .radioslider__knob {
+        .radioslider__handle {
             $factor: 4;
             width: (map-deep-get($radioslider, tiny, dot-size) + (map-deep-get($radioslider, tiny, bar-padding) * 2)) * $factor; // old browsers
-            width: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
             height: (map-deep-get($radioslider, tiny, dot-size) + (map-deep-get($radioslider, tiny, bar-padding) * 2)) * $factor; // old browsers
+            width: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
             height: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
             transform: translateY(calc(-50% + (var(--bar-height)/2)));
         }
