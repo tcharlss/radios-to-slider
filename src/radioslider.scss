@@ -358,7 +358,7 @@ $radioslider: (
             width: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
             height: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
 
-            // Secondary handle : keep the original dmensions
+            // Secondary handle : keep the original dimensions
             &_origin {
                 width: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
                 height: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers

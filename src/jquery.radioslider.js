@@ -204,10 +204,10 @@
             // Set fill dimensions and position
             // If different origin
             if (
-                fillOrigin && (originPos = this.getPositionFromValue(fillOrigin))
-                || fillOffset && (originPos = this.getPositionFromValue(fillOffset))
+                fillOrigin !== null && (originPos = this.getPositionFromValue(fillOrigin))
+                || fillOffset !== null && (originPos = this.getPositionFromValue(fillOffset))
             ) {
-                originLevel = fillOrigin ? this.getLevelFromValue(fillOrigin) : this.getLevelFromValue(fillOffset);
+                originLevel = fillOrigin !== null ? this.getLevelFromValue(fillOrigin) : this.getLevelFromValue(fillOffset);
                 $fill.css('opacity', '').addClass('offseted');
 
                 // Insert a secondary handle at the offset origin
@@ -235,7 +235,7 @@
                             break;
                     }
                 // Inverse with fillorigin
-                } else if (fillOrigin) {
+                } else if (fillOrigin !== null) {
                     $bar.addClass(options.inverseClass);
                     $handleOrigin.addClass(options.inverseClass);
                     switch (this.orientation) {
@@ -309,7 +309,7 @@
         // Radio input change
         $inputs.on('change', function() {
             var $this = $(this),
-                val   = $this.attr('value');
+                value = $this.attr('value');
 
             $this.prop('checked', true);
 
@@ -317,8 +317,6 @@
                 slider.options.onChange($this, [$inputs]);
             }
 
-            slider.value = val;
-            // $bearer.attr('data-value', val);
             slider.setSlider();
             $bearer.trigger('radiochange');
         });
@@ -393,7 +391,7 @@
     Plugin.prototype.getLevelFromValue = function(value) {
         var level;
 
-        level = Number(this.$inputs.filter('[value=' + value + ']').attr('data-level'));
+        level = Number(this.$inputs.filter('[value="' + value + '"]').attr('data-level'));
         level = (!Number.isNaN(level)) ? level : 0;
 
         return level;
@@ -412,7 +410,7 @@
     Plugin.prototype.getPositionFromValue = function(value) {
         var position, dimensions, dimension, $dot;
 
-        if (($dot = this.$dots.filter('[data-value=' + value + ']')) && $dot.length > 0) {
+        if (($dot = this.$dots.filter('[data-value="' + value + '"]')) && $dot.length > 0) {
             dimensions = {
                 width:  $dot.outerWidth(),
                 height: $dot.outerHeight(),
