@@ -75,10 +75,8 @@ $radioslider: (
 
     position: relative;
     display: flex;
-    justify-content: space-between;
     padding: map-deep-get($radioslider, default, bar-padding); // old browsers
     padding: var(--bar-padding);
-    padding-bottom: 0;
     margin-bottom: 1em;
 
 
@@ -90,7 +88,6 @@ $radioslider: (
     // Radio inputs and labels container
     &__item {
         z-index: 1;
-        flex: 1 0 0px; /* 0px flex basis to force equal widths */
         display: flex;
         justify-content: center;
     }
@@ -113,8 +110,6 @@ $radioslider: (
     // Labels
     &__label {
         display: flex;
-        flex-flow: column;
-        align-items: center;
         cursor: pointer;
 
         // Hover & focus states
@@ -152,8 +147,6 @@ $radioslider: (
     // Labels text
     &__text {
         display: block;
-        margin-top: map-deep-get($radioslider, default, bar-padding) + map-deep-get($radioslider, default, bar-margin-bottom);
-        margin-top: calc(var(--bar-padding) + var(--bar-margin-bottom));
         word-break: break-all;
         overflow-wrap: anywhere; /* better than word-break, when supported */
         text-align: center;
@@ -172,8 +165,6 @@ $radioslider: (
         top: 0;
         left: 0;
         right: 0;
-        height: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
-        height: calc(var(--dot-size) + (var(--bar-padding) * 2));
         border-radius: 99em;
         background-color: map-get($radioslider, bar-color); // old browsers
         background-color: var(--bar-color);
@@ -192,15 +183,13 @@ $radioslider: (
     }
 
     &__fill {
+        display: block;
         pointer-events: none;
         position: absolute;
-        height: 100%;
-        border-top-left-radius: 99em;
-        border-bottom-left-radius: 99em;
         background-color: map-get($radioslider, fill-color); // old browsers
         background-color: var(--fill-color);
 
-        &.offseted {
+        &.offseted.offseted {
             border-radius: 0;
         }
     }
@@ -232,8 +221,70 @@ $radioslider: (
        ========== */
   
     &_horizontal {
+        flex-flow: row;
+        justify-content: space-between;
+        padding-bottom: 0;
+
+        .radioslider__item {
+            flex: 1 0 0px; /* 0px flex basis to force equal widths */
+        }
+        .radioslider__label {
+            flex-flow: column;
+            align-items: center;
+        }
+        .radioslider__text {
+            margin-top: map-deep-get($radioslider, default, bar-padding) + map-deep-get($radioslider, default, bar-margin-bottom);
+            margin-top: calc(var(--bar-padding) + var(--bar-margin-bottom));
+        }
+        .radioslider__bar {
+            height: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
+            height: calc(var(--dot-size) + (var(--bar-padding) * 2));
+        }
         .radioslider__handle {
             transform: translateX(-50%);
+        }
+        .radioslider__fill {
+            border-top-left-radius: 99em;
+            border-bottom-left-radius: 99em;
+            height: 100%;
+        }
+    }
+
+    /* ========
+       Vertical
+       ======== */
+  
+    &_vertical {
+        flex-flow: column;
+        align-items: flex-start;
+        height: 100%;
+        padding-right: 0;
+
+        .radioslider__item {
+            flex: 1 1 auto;
+            &:last-of-type {
+                flex: 0 1 auto;
+            }
+        }
+        .radioslider__label {
+            flex-flow: row;
+        }
+        .radioslider__text {
+            margin-left: map-deep-get($radioslider, default, bar-padding) + map-deep-get($radioslider, default, bar-margin-bottom);
+            margin-left: calc(var(--bar-padding) + var(--bar-margin-bottom));
+        }
+        .radioslider__bar {
+            bottom: 0;
+            width: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
+            width: calc(var(--dot-size) + (var(--bar-padding) * 2));
+        }
+        .radioslider__handle {
+            transform: translateY(50%);
+        }
+        .radioslider__fill {
+            width: 100%;
+            border-bottom-right-radius: 99em;
+            border-bottom-left-radius: 99em;
         }
     }
 

@@ -69,8 +69,8 @@
         // this.$item        = $('<div class="' + this.options.itemClass + '">');
         // this.$dot         = $('<span class="' + this.options.dotClass + '">');
         // this.$text        = $('<span class="' + this.options.textClass + '">');
-        this.$bar            = $('<div class="' + this.options.barClass + '">');
-        this.$fill           = $('<div class="' + this.options.fillClass + '">');
+        this.$bar            = $('<span class="' + this.options.barClass + '">');
+        this.$fill           = $('<span class="' + this.options.fillClass + '">');
         this.$handle         = $('<span class="' + this.options.handleClass + '">');
         this.$bar
             .append(this.$fill.css('visibility', 'hidden'))
@@ -136,7 +136,7 @@
                     text,
                     $text,
                     $dot;
-                
+
                 text  = $(this).html();
                 $text = $('<span class="' + options.textClass + '">').html(text);
                 level = i+1;
@@ -165,6 +165,11 @@
         });
         $items = $bearer.find('.' + options.itemClass);
         this.$items = $items;
+        if (this.orientation == 'vertical') {
+            $items.each(function(i, el){
+                $bearer.prepend(el);
+            });
+        }
 
         // Bar
         $bearer.append($bar);
@@ -265,9 +270,14 @@
 
             // Show the fill bar
             $fill.css('visibility', '');
-            $fill[0].style[this.DIMENSION] = this.dimensionToPercent(fillDimension) + '%';
             $fill[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(fillDirection) + '%';
-            $handle[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(dotPos/* - handleOffset*/) + '%';
+            if (this.orientation == 'vertical') {
+                $fill[0].style[this.DIMENSION] = 100 - this.dimensionToPercent(fillDimension) + '%';
+                $handle[0].style[this.DIRECTION_STYLE] = 100 - this.dimensionToPercent(dotPos/* - handleOffset*/) + '%';
+            } else {
+                $fill[0].style[this.DIMENSION] = this.dimensionToPercent(fillDimension) + '%';
+                $handle[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(dotPos/* - handleOffset*/) + '%';
+            }
 
             // Update value
             this.level = currentLevel;
@@ -418,7 +428,7 @@
                 height: $dot.outerHeight(),
             };
             dimension = dimensions[this.DIMENSION];
-            position = $dot.position()[this.DIRECTION_STYLE] + dimension/2;
+            position = $dot.position()[this.DIRECTION] + dimension/2;
         }
         position = (!Number.isNaN(position)) ? position : 0;
 
