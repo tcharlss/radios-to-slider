@@ -165,7 +165,7 @@
         });
         $items = $bearer.find('.' + options.itemClass);
         this.$items = $items;
-        if (this.orientation == 'vertical') {
+        if (this.orientation === 'vertical') {
             $items.each(function(i, el){
                 $bearer.prepend(el);
             });
@@ -211,8 +211,7 @@
             // Set fill dimensions and position
             // If different origin
             if (
-                fillOrigin !== null && (originPos = this.getPositionFromValue(fillOrigin))
-                || fillOffset !== null && (originPos = this.getPositionFromValue(fillOffset))
+                fillOrigin !== null && (originPos = this.getPositionFromValue(fillOrigin)) || fillOffset !== null && (originPos = this.getPositionFromValue(fillOffset))
             ) {
                 originLevel = fillOrigin !== null ? this.getLevelFromValue(fillOrigin) : this.getLevelFromValue(fillOffset);
                 $fill.css('opacity', '').addClass('offseted');
@@ -271,7 +270,7 @@
             // Show the fill bar
             $fill.css('visibility', '');
             $fill[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(fillDirection) + '%';
-            if (this.orientation == 'vertical') {
+            if (this.orientation === 'vertical') {
                 $fill[0].style[this.DIMENSION] = 100 - this.dimensionToPercent(fillDimension) + '%';
                 $handle[0].style[this.DIRECTION_STYLE] = 100 - this.dimensionToPercent(dotPos/* - handleOffset*/) + '%';
             } else {
@@ -285,13 +284,12 @@
 
             // Set style for lower levels
             input = 0;
-            lowLevel = originLevel ? Math.min(originLevel, currentLevel) : 1,
+            lowLevel = originLevel ? Math.min(originLevel, currentLevel) : 1;
             highLevel = originLevel ? Math.max(originLevel, currentLevel) : currentLevel;
             $inputs.each(function() {
                 input++;
 
                 var $this       = $(this),
-                    $label      = $this.next('label'),
                     $dot        = $this.next('label').find('.' + options.dotClass),
                     level       = Number($this.attr('data-level')),
                     ignoreUnder = (fillOffset !== null && currentLevel < originLevel);
@@ -326,7 +324,7 @@
             $(this).prop('checked', true);
 
             if (slider.options.onChange) {
-                slider.options.onChange($this, [$inputs]);
+                slider.options.onChange($(this), [$inputs]);
             }
 
             slider.setSlider();
