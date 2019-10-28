@@ -38,12 +38,13 @@ $radioslider: (
     )
 );
 
-html .radioslider__handle {
-    // opacity: 0.5;
-}
-html .radioslider__fill {
-    // border-radius: 0;
-}
+// html .radioslider__handle {
+//     opacity: 0.5;
+// }
+// html .radioslider__fill {
+//     border-radius: 0;
+//     opacity: 0.5;
+// }
 
 /* =========
    Container
@@ -70,7 +71,7 @@ html .radioslider__fill {
     --dot-size: #{map-deep-get($radioslider, default, dot-size)};
     --bar-padding: #{map-deep-get($radioslider, default, bar-padding)};
     --bar-margin-bottom: #{map-deep-get($radioslider, default, bar-margin-bottom)};
-    --bar-height: calc(var(--bar-padding)*2 + var(--dot-size));
+    --bar-thickness: calc(var(--bar-padding)*2 + var(--dot-size));
 
     position: relative;
     display: flex;
@@ -126,13 +127,6 @@ html .radioslider__fill {
             }
         }
 
-        // Lower then the checked input
-        &.lower {
-            .radioslider__dot {
-                opacity: 0.2;
-            }
-        }
-
         // Active state : see `input:checked` instead
         &.active {}
     }
@@ -148,6 +142,11 @@ html .radioslider__fill {
         background-color: white;
         border-radius: 99em;
         transition: all 0.1s;
+
+        // Lower then the checked input
+        &.lower {
+            opacity: 0.2;
+        }
     }
 
     // Labels text
@@ -196,7 +195,7 @@ html .radioslider__fill {
         pointer-events: none;
         position: absolute;
         height: 100%;
-        border-radius: 99em;
+        // border-radius: 99em;
         background-color: map-get($radioslider, fill-color); // old browsers
         background-color: var(--fill-color);
     }
@@ -213,6 +212,24 @@ html .radioslider__fill {
         border-radius: 99em;
         border: 0.2em solid var(--fill-color);
         border-color: map-deep-get($radioslider, default, fill-color); // old browsers
+
+        // Secondary handle when the origin is offsetd
+        &_origin {
+            background-color: var(--fill-color);
+            &.inverse {
+                background-color: var(--fill-color-inverse);
+            }
+        }
+    }
+
+    /* ==========
+       Horizontal
+       ========== */
+  
+    &_horizontal {
+        .radioslider__handle {
+            transform: translateX(-50%);
+        }
     }
 
     /* ========
@@ -258,7 +275,7 @@ html .radioslider__fill {
        Size : small
        ============ */
 
-    &.small {
+    &_small {
 
         // Size variables
         --dot-size: #{map-deep-get($radioslider, small, dot-size)};
@@ -294,7 +311,7 @@ html .radioslider__fill {
         Size : tiny
         =========== */
 
-    &.tiny {
+    &_tiny {
 
         // Size variables
         --dot-size: #{map-deep-get($radioslider, tiny, dot-size)};
@@ -308,7 +325,7 @@ html .radioslider__fill {
             width: var(--dot-size);
             height: var(--dot-size);
 
-            // Makes the dot more easily clicable
+            // Makes the dot more easily clickable
             &:after {
                 content: '';
                 position: absolute;
@@ -335,7 +352,11 @@ html .radioslider__fill {
             height: (map-deep-get($radioslider, tiny, dot-size) + (map-deep-get($radioslider, tiny, bar-padding) * 2)) * $factor; // old browsers
             width: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
             height: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
-            transform: translateY(calc(-50% + (var(--bar-height)/2)));
+        }
+        &.radioslider_horizontal {
+            .radioslider__handle {
+                transform: translate(-50%, calc(-50% + (var(--bar-thickness)/2)));
+            }
         }
     }
 

@@ -26,8 +26,8 @@
             disabledClass:   'radioslider_disabled',
             fitClass:        'radioslider_fit',
             animationClass:  'radioslider_animated',
-            labelLowerClass: 'lower',
-            barInverseClass:    'inverse',
+            dotlLowerClass: 'lower',
+            inverseClass:    'inverse',
         },
         constants = {
             orientation: {
@@ -113,7 +113,7 @@
                 ' ' + options[this.orientation + 'Class'] +
                 ' ' + (options.fit ? options.fitClass : '') +
                 ' ' + (options.animation ? options.animationClass : '') +
-                ' ' + options.size
+                ' ' + (options.size ? options.sliderClass + '_' + options.size : '')
             )
             .attr('data-radioslider', this.identifier);
 
@@ -182,13 +182,14 @@
                 $handle    = this.$handle,
                 fillOrigin = options.fillOrigin,
                 fillOffset = options.fillOffset,
+                $handleOrigin,
                 originLevel,
                 currentLevel,
                 currentValue,
                 dotPos,
                 originPos,
-                handlePosOffset,
-                barPosOffset,
+                handleOffset,
+                barOffset,
                 fillDimension,
                 fillDirection,
                 input;
@@ -197,59 +198,74 @@
             currentLevel     = Number($inputChecked.attr('data-level'));
             currentValue     = this.getValueFromLevel(currentLevel);
             dotPos           = this.getPositionFromValue(currentValue);
-            handlePosOffset  = this.getHandlePositionOffset();
-            barPosOffset     = this.getBarPositionOffset();
+            handleOffset     = this.getHandleOffset(); // half handle height/width
+            barOffset        = this.getBarOffset(); // half bar height/width
 
-            // If different fill origin
+            // Set fill dimensions and position
+            // If different origin
             if (
                 fillOrigin && (originPos = this.getPositionFromValue(fillOrigin))
                 || fillOffset && (originPos = this.getPositionFromValue(fillOffset))
             ) {
                 originLevel = fillOrigin ? this.getLevelFromValue(fillOrigin) : this.getLevelFromValue(fillOffset);
                 $fill.css('opacity', '');
+
+                // Insert a secondary handle at the offset origin
+                if (!this.$handleOrigin) {
+                    $handleOrigin = $('<span class="' + this.options.handleClass + ' ' + options.handleClass + '_origin">');
+                    this.$handleOrigin = $handleOrigin;
+                    $fill.after($handleOrigin);
+                    $handleOrigin[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(originPos/* - handleOffset*/) + '%';
+                } else {
+                    $handleOrigin = this.$handleOrigin;
+                }
+
                 // Positive direction
                 if (currentLevel >= originLevel) {
-                    $bar.removeClass(options.barInverseClass);
+                    $bar.removeClass(options.inverseClass);
+                    $handleOrigin.removeClass(options.inverseClass).css('opacity', '');
                     switch (this.orientation) {
                         case 'horizontal':
-                            fillDirection = originPos - barPosOffset;
-                            fillDimension = dotPos - originPos + (barPosOffset * 2);
+                            fillDimension = dotPos - originPos/* + (barOffset * 2)*/;
+                            fillDirection = originPos/* - barOffset*/;
                             break;
                         case 'vertical':
-                            fillDirection = originPos;
                             fillDimension = dotPos - originPos;
+                            fillDirection = originPos;
                             break;
                     }
                 // Inverse with fillorigin
                 } else if (fillOrigin) {
-                    $bar.addClass(options.barInverseClass);
+                    $bar.addClass(options.inverseClass);
+                    $handleOrigin.addClass(options.inverseClass);
                     switch (this.orientation) {
                         case 'horizontal':
-                            fillDirection = dotPos - barPosOffset;
-                            fillDimension = originPos - dotPos + (barPosOffset * 2);
+                            fillDimension = originPos - dotPos/* + (barOffset * 2)*/;
+                            fillDirection = dotPos/* - barOffset*/;
                             break;
                         case 'vertical':
-                            fillDirection = dotPos;
                             fillDimension = originPos + dotPos;
+                            fillDirection = dotPos;
                             break;
                     }
                 // Inverse with filloffset
                 } else {
+                    $handleOrigin.css('opacity', 0);
                     $fill.css('opacity', 0);
-                    fillDirection = dotPos - barPosOffset;
-                    fillDimension = barPosOffset * 2;
+                    fillDimension = barOffset * 2;
+                    fillDirection = dotPos/* - barOffset*/;
                 }
             // If normal origin
             } else  {
-                fillDimension = dotPos + barPosOffset;
+                fillDimension = dotPos/* + barOffset*/;
                 fillDirection = 0;
             }
 
-            // Show the fill bar and sets its width
+            // Show the fill bar
             $fill.css('visibility', '');
             $fill[0].style[this.DIMENSION] = this.dimensionToPercent(fillDimension) + '%';
             $fill[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(fillDirection) + '%';
-            $handle[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(dotPos - handlePosOffset) + '%';
+            $handle[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(dotPos/* - handleOffset*/) + '%';
 
             // Update value
             this.level = currentLevel;
@@ -268,15 +284,17 @@
 
                 // Lower levels
                 if (level < currentLevel) {
-                    $dot.css('opacity', '');
-                    $label.addClass(options.labelLowerClass);
+                    $dot
+                        .css('opacity', '')
+                        .addClass(options.dotlLowerClass);
                 // Current level
                 } else if (level === currentLevel) {
                     $dot.css('opacity', '0');
                 // Higher levels
                 } else if (level > currentLevel) {
-                    $dot.css('opacity', '');
-                    $label.removeClass(options.labelLowerClass);
+                    $dot
+                        .css('opacity', '')
+                        .removeClass(options.dotlLowerClass);
                 }
             });
         }
@@ -408,7 +426,7 @@
     };
 
     // Get the position offset of the handle (eg. half its length)
-    Plugin.prototype.getHandlePositionOffset = function() {
+    Plugin.prototype.getHandleOffset = function() {
         var handleDimensions,
             handleDimension,
             offset;
@@ -425,7 +443,7 @@
     };
 
     // Get the position offset of the bar (eg. half its length)
-    Plugin.prototype.getBarPositionOffset = function() {
+    Plugin.prototype.getBarOffset = function() {
         var barDimensions,
             barDimension,
             offset;
