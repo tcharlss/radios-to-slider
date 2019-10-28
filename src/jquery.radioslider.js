@@ -208,7 +208,7 @@
                 || fillOffset && (originPos = this.getPositionFromValue(fillOffset))
             ) {
                 originLevel = fillOrigin ? this.getLevelFromValue(fillOrigin) : this.getLevelFromValue(fillOffset);
-                $fill.css('opacity', '');
+                $fill.css('opacity', '').addClass('offseted');
 
                 // Insert a secondary handle at the offset origin
                 if (!this.$handleOrigin) {

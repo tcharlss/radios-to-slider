@@ -195,9 +195,14 @@ $radioslider: (
         pointer-events: none;
         position: absolute;
         height: 100%;
-        // border-radius: 99em;
+        border-top-left-radius: 99em;
+        border-bottom-left-radius: 99em;
         background-color: map-get($radioslider, fill-color); // old browsers
         background-color: var(--fill-color);
+
+        &.offseted {
+            border-radius: 0;
+        }
     }
 
     &__handle {
@@ -352,6 +357,15 @@ $radioslider: (
             height: (map-deep-get($radioslider, tiny, dot-size) + (map-deep-get($radioslider, tiny, bar-padding) * 2)) * $factor; // old browsers
             width: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
             height: calc((var(--dot-size) + (var(--bar-padding) * 2)) * #{$factor});
+
+            // Secondary handle : keep the original dmensions
+            &_origin {
+                width: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
+                height: map-deep-get($radioslider, default, dot-size) + (map-deep-get($radioslider, default, bar-padding) * 2); // old browsers
+                width: calc(var(--dot-size) + (var(--bar-padding) * 2));
+                height: calc(var(--dot-size) + (var(--bar-padding) * 2));
+            }
+            
         }
         &.radioslider_horizontal {
             .radioslider__handle {
