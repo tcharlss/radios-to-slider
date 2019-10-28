@@ -143,8 +143,8 @@ $radioslider: (
         border-radius: 99em;
         transition: all 0.1s;
 
-        // Lower then the checked input
-        &.lower {
+        // Under the fill bar
+        &.under {
             opacity: 0.2;
         }
     }

@@ -26,7 +26,7 @@
             disabledClass:   'radioslider_disabled',
             fitClass:        'radioslider_fit',
             animationClass:  'radioslider_animated',
-            dotlLowerClass: 'lower',
+            dotUnderClass:   'under',
             inverseClass:    'inverse',
         },
         constants = {
@@ -183,9 +183,11 @@
                 fillOrigin = options.fillOrigin,
                 fillOffset = options.fillOffset,
                 $handleOrigin,
-                originLevel,
-                currentLevel,
                 currentValue,
+                currentLevel,
+                originLevel,
+                lowLevel,
+                highLevel,
                 dotPos,
                 originPos,
                 handleOffset,
@@ -273,28 +275,30 @@
 
             // Set style for lower levels
             input = 0;
-            var baseLevel = originLevel ? originLevel : currentLevel;
+            lowLevel = originLevel ? Math.min(originLevel, currentLevel) : 1,
+            highLevel = originLevel ? Math.max(originLevel, currentLevel) : currentLevel;
             $inputs.each(function() {
                 input++;
 
-                var $this  = $(this),
-                    $label = $this.next('label'),
-                    $dot   = $this.next('label').find('.' + options.dotClass),
-                    level  = Number($this.attr('data-level'));
+                var $this       = $(this),
+                    $label      = $this.next('label'),
+                    $dot        = $this.next('label').find('.' + options.dotClass),
+                    level       = Number($this.attr('data-level')),
+                    ignoreUnder = (fillOffset !== null && currentLevel < originLevel);
 
-                // Lower levels
-                if (level < currentLevel) {
-                    $dot
-                        .css('opacity', '')
-                        .addClass(options.dotlLowerClass);
                 // Current level
-                } else if (level === currentLevel) {
+                if (level === currentLevel) {
                     $dot.css('opacity', '0');
-                // Higher levels
-                } else if (level > currentLevel) {
+                // Outside the fill
+                } else if (level < lowLevel || level > highLevel || ignoreUnder) {
                     $dot
                         .css('opacity', '')
-                        .removeClass(options.dotlLowerClass);
+                        .removeClass(options.dotUnderClass);
+                // Under the fill
+                } else {
+                    $dot
+                        .css('opacity', '')
+                        .addClass(options.dotUnderClass);
                 }
             });
         }
@@ -308,10 +312,8 @@
 
         // Radio input change
         $inputs.on('change', function() {
-            var $this = $(this),
-                value = $this.attr('value');
 
-            $this.prop('checked', true);
+            $(this).prop('checked', true);
 
             if (slider.options.onChange) {
                 slider.options.onChange($this, [$inputs]);
