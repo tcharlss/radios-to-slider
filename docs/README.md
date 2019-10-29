@@ -32,7 +32,11 @@ Thanks to both of them for their work!
 
 ## Installation
 
-TODO
+* Via [npm](https://www.npmjs.org/) : ```npm install --save radioslider```
+* Via [Bower](http://bower.io/) : ```bower install --save radioslider```
+* Download manually on [Github](https://github.com/tcharlss/radioslider/releases)
+
+The script is also hosted on CDN like [unpkg](https://unpkg.com/radioslider) or [jsdelivr](http://www.jsdelivr.com/#!radioslider)
 
 ## Quick start
 
@@ -197,5 +201,5 @@ Firefox | Chrome | Safari | Edge | IE
 31+     | 49+    | 9.1+   |  16+ | 😂
 
 <script>
-  console.log(2333)
+  $('#radios-basic').radioslider({fit:true});
 </script>

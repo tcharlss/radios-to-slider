@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.0.0-beta
+## 1.0.0-dev - 2019-10
 
 Complete rehauling:
 
@@ -13,3 +13,7 @@ Complete rehauling:
 * Add `small` and `tiny` sizes
 * Add `fillOrigin`, `fillOffset` and `fit` options (≠fitContainer)
 * Tweak the apparence
+
+## < 1.0.0
+
+Check [the original script's changelog](https://github.com/rubentd/radios-to-slider/blob/master/CHANGELOG.md)
