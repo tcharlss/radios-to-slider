@@ -27,6 +27,7 @@
   "homepage": "https://tcharlss.github.io/radioslider/",
   "docs": "https://tcharlss.github.io/radioslider/",
   "download": "https://github.com/tcharlss/radioslider/releases",
+  "unpkg": "dist/jquery.radioslider.min.js",
   "peerDependencies": {
     "jquery": ">=3.4.1"
   },
