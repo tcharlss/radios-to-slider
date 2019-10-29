@@ -19,13 +19,12 @@ module.exports = function (grunt) {
         pkg: require('./package'),
 
         meta: {
-            banner: '/*prout*/',
-            bannerz: '/**\n' +
-            ' * <%= pkg.name %> v<%= pkg.version %>\n' +
-            ' * jQuery plugin to create a slider using a list of radio buttons\n' +
-            ' * (c) <%= grunt.template.today("yyyy") %> tcharlss\n' +
-            ' * <%= pkg.license.type %> license\n' +
-            ' */'
+            banner: '/**\n' +
+            ' * <%= pkg.title %> <%= pkg.version %>\n' +
+            ' * A jQuery plugin to display radio buttons as a slider.\n' +
+            ' * (c) <%= grunt.template.today("yyyy") %> <%= pkg.maintainers[0].name %> / <%= pkg.maintainers[1].name %>\n' +
+            ' * <%= pkg.licenses[0].type %> license\n' +
+            ' */\n'
         },
 
         // Watches files for changes and runs tasks based on the changed files

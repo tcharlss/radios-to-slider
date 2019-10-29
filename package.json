@@ -7,7 +7,7 @@
     "radio",
     "buttons"
   ],
-  "version": "1.0.0-beta",
+  "version": "1.0.0-dev",
   "author": {
     "name": "tcharlss"
   },
@@ -15,6 +15,10 @@
     "name": "tcharlss",
     "email": "bonjour@bravecassine.com",
     "url": "https://bravecassine.com"
+  },{
+    "name": "Ruben Torres",
+    "email": "rubentdh@gmail.com",
+    "url": "http://rubentd.com/"
   }],
   "licenses": [{
     "type": "MIT",
