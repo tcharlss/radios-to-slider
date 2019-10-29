@@ -11,7 +11,7 @@ A jQuery plugin to display radio buttons as a slider.
 * Different sizes, easily customizable
 * ~13kB gzipped
 
-[Check the documentation](/doc) to get started.
+**[Check the documentation](https://tcharlss.github.io/radioslider/) to get started.**
 
 > This is a fork of [Ruben Torres’s Radio to Slider](http://rubentd.com/radios-to-slider).
 A bit of code is also borrowed from [Andre Ruffert’s rangeslider.js](https://rangeslider.js.org/).

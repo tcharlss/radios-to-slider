@@ -14,8 +14,8 @@
         "buttons"
     ],
     "license": "MIT",
-    "homepage": "https://github.com/tcharlss/radioslider/docs",
-    "docs": "https://github.com/tcharlss/radioslider/docs",
+    "homepage": "https://tcharlss.github.io/radioslider/",
+    "docs": "https://tcharlss.github.io/radioslider/",
     "download": "https://github.com/tcharlss/radioslider/releases",
     "ignore": [
         "**/.*",
