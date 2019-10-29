@@ -1,8 +1,12 @@
+!> This plugin is a fork of [Ruben Torres’s Radios to Slider](http://rubentd.com/radios-to-slider).
+A bit of code is also borrowed from [Andre Ruffert’s rangeslider.js](https://rangeslider.js.org/).
+Thanks to both of them for their work!
+
 # Radioslider
 
 A jQuery plugin to display radio buttons as a slider.
 
-Basically, it turns this:
+Turn this:
 <div>
 <input id="opt1a" name="a" type="radio" value="nice">
 <label for="opt1a">Nice</label>
@@ -26,17 +30,12 @@ Into this:
 <label for="opt4b">Nifty</label>
 </div>
 
-!> This plugin is a fork of [Ruben Torres’s Radio to Slider](http://rubentd.com/radios-to-slider).
-A bit of code is also borrowed from [Andre Ruffert’s rangeslider.js](https://rangeslider.js.org/).
-Thanks to both of them for their work!
-
 ## Installation
 
 * Via [npm](https://www.npmjs.org/) : ```npm install --save radioslider```
-* Via [Bower](http://bower.io/) : ```bower install --save radioslider```
 * Download manually on [Github](https://github.com/tcharlss/radioslider/releases)
 
-The script is also hosted on CDN like [unpkg](https://unpkg.com/radioslider) or [jsdelivr](http://www.jsdelivr.com/#!radioslider)
+The script is also hosted on CDNs like [unpkg](https://unpkg.com/radioslider) or [jsdelivr](https://www.jsdelivr.com/package/npm/radioslider?path=dist)
 
 ## Quick start
 
@@ -72,7 +71,46 @@ The script is also hosted on CDN like [unpkg](https://unpkg.com/radioslider) or 
 
 ### Sizes
 
-The default size is equivalent to `'medium'`. There are 2 others sizes: `'small'` and `'tiny'`.
+There are 2 more sizes: `'small'` and `'tiny'`.
+
+**Default:**
+
+<div id="radios-medium">
+<input id="opt1e" name="e" type="radio" value="nice">
+<label for="opt1e">Nice</label>
+<input id="opt2e" name="e" type="radio" value="good" checked>
+<label for="opt2e">Good</label>
+<input id="opt3e" name="e" type="radio" value="swell">
+<label for="opt3e">Swell</label>
+<input id="opt4e" name="e" type="radio" value="nifty">
+<label for="opt4e">Nifty</label>
+</div>
+
+**Small:**
+
+<div id="radios-small">
+<input id="opt1c" name="c" type="radio" value="nice">
+<label for="opt1c">Nice</label>
+<input id="opt2c" name="c" type="radio" value="good" checked>
+<label for="opt2c">Good</label>
+<input id="opt3c" name="c" type="radio" value="swell">
+<label for="opt3c">Swell</label>
+<input id="opt4c" name="c" type="radio" value="nifty">
+<label for="opt4c">Nifty</label>
+</div>
+
+**Tiny:**
+
+<div id="radios-tiny">
+<input id="opt1d" name="d" type="radio" value="nice">
+<label for="opt1d">Nice</label>
+<input id="opt2d" name="d" type="radio" value="good" checked>
+<label for="opt2d">Good</label>
+<input id="opt3d" name="d" type="radio" value="swell">
+<label for="opt3d">Swell</label>
+<input id="opt4d" name="d" type="radio" value="nifty">
+<label for="opt4d">Nifty</label>
+</div>
 
 ```javascript
 $("#radios").radioslider({
@@ -97,7 +135,18 @@ $("#radios").radioslider({
 
 ### Fit
 
-The fill bar can fit the extremities. Be aware that in some cases, the labels may overflow.
+The fill can fit the edges. Be aware that in some cases, the labels may overflow.
+
+<div id="radios-fit">
+<input id="opt1f" name="f" type="radio" value="nice">
+<label for="opt1f">Nice</label>
+<input id="opt2f" name="f" type="radio" value="good" checked>
+<label for="opt2f">Good</label>
+<input id="opt3f" name="f" type="radio" value="swell">
+<label for="opt3f">Swell</label>
+<input id="opt4f" name="f" type="radio" value="nifty">
+<label for="opt4f">Nifty</label>
+</div>
 
 ```javascript
 $("#radios").radioslider({
@@ -107,7 +156,24 @@ $("#radios").radioslider({
 
 ### Bidirectional
 
-The origin of the bill bar can be set to any value. Here's an example with the center at `'0'`.
+The origin of the fill can be set to any value, making the slider bidirectional. Here's an example with the center set at `'0'`.
+
+<div id="radios-fillorigin">
+<input id="opt1g" name="g" type="radio" value="-3" checked>
+<label for="opt1g">-3</label>
+<input id="opt2g" name="g" type="radio" value="-2">
+<label for="opt2g">-2</label>
+<input id="opt3g" name="g" type="radio" value="-1">
+<label for="opt3g">-1</label>
+<input id="opt4g" name="g" type="radio" value="0">
+<label for="opt4g">0</label>
+<input id="opt5g" name="g" type="radio" value="1">
+<label for="opt5g">-1</label>
+<input id="opt6g" name="g" type="radio" value="2">
+<label for="opt6g">-2</label>
+<input id="opt7g" name="g" type="radio" value="3">
+<label for="opt7g">-3</label>
+</div>
 
 ```javascript
 $("#radios").radioslider({
@@ -117,17 +183,47 @@ $("#radios").radioslider({
 
 ### Offset center
 
-For some special cases, it's possible to offset the center of the fill bar. It means that on the "negative" values, there will be no fill bar.
+In some special cases, it's possible to offset the center of the fill. It means that on the "negative" values, there will be no fill.
+
+On a scale of 1 to 4, how would you rate this feature?
+
+<div id="radios-filloffset">
+<input id="opt1h" name="h" type="radio" value="-3" checked>
+<label for="opt1h">I don't care</label>
+<input id="opt2h" name="h" type="radio" value="-2">
+<label for="opt2h">No idea</label>
+<input id="opt4h" name="h" type="radio" value="1">
+<label for="opt4h">1</label>
+<input id="opt5h" name="h" type="radio" value="2">
+<label for="opt5h">2</label>
+<input id="opt6h" name="h" type="radio" value="3">
+<label for="opt6h">3</label>
+<input id="opt3h" name="h" type="radio" value="4">
+<label for="opt3h">4</label>
+</div>
 
 ```javascript
 $("#radios").radioslider({
-    fillOffset: '0'
+    fillOffset: '1'
 });
 ```
 
 ### Vertical orientation
 
-Vertical orientation is supported. In that case the values goes from bottom to top.
+Vertical orientation is supported, the values goes from bottom to top.
+
+In some cases you'll need to give the slider container a fixed height, otherwise the slider will shrink.
+
+<div id="radios-vertical">
+<input id="opt1i" name="i" type="radio" value="1">
+<label for="opt1i">1</label>
+<input id="opt2i" name="i" type="radio" value="2" checked>
+<label for="opt2i">2</label>
+<input id="opt3i" name="i" type="radio" value="3">
+<label for="opt3i">3</label>
+<input id="opt4i" name="i" type="radio" value="4">
+<label for="opt4i">4</label>
+</div>
 
 ```javascript
 $("#radios").radioslider({
@@ -136,7 +232,7 @@ $("#radios").radioslider({
 ```
 
 
-## Usage
+## Methods
 
 Call the methods like this:
 
@@ -163,6 +259,19 @@ Call the methods like this:
 </script>
 ```
 
+**Try it yourself:** [`setDisabled`](disable ':ignore') | [`setEnabled`](enable ':ignore') | [`SetValue` → 3](value ':ignore') | [`Destroy`](destroy ':ignore')
+
+<div id="radios-methods">
+<input id="opt1j" name="j" type="radio" value="1">
+<label for="opt1j">1</label>
+<input id="opt2j" name="j" type="radio" value="2" checked>
+<label for="opt2j">2</label>
+<input id="opt3j" name="j" type="radio" value="3">
+<label for="opt3j">3</label>
+<input id="opt4j" name="j" type="radio" value="4">
+<label for="opt4j">4</label>
+</div>
+
 ## Options
 
 Option       | Values      | Default
@@ -185,11 +294,11 @@ getValue    | false    | -
 setValue    | false    | string
 destroy     | false    |
 
-Events        | Triggered
+Events        | Trigger
 ------------- | -------------
-radiochange   | If triggered [click, change] events
-radiodisabled | When disabling radios
-radiodenabled | When enabling radios
+radiochange   | Called when a radio inputs change, after the slider have been updated
+radiodisabled | Called after the inputs have been disabled
+radiodenabled | Called after the inputs have been enabled
 
 ## Support
 
@@ -201,5 +310,23 @@ Firefox | Chrome | Safari | Edge | IE
 31+     | 49+    | 9.1+   |  16+ | 😂
 
 <script>
-  $('#radios-basic').radioslider({fit:true});
+  $('#radios-basic').radioslider();
+  $('#radios-small').radioslider({size:'small'});
+  $('#radios-tiny').radioslider({size:'tiny'});
+  $('#radios-medium').radioslider();
+  $('#radios-fit').radioslider({fit:true});
+  $('#radios-fillorigin').radioslider({fillOrigin:'0'});
+  $('#radios-filloffset').radioslider({fillOffset:'1'});
+  $('#radios-vertical').radioslider({orientation:'vertical'});
+  var $r = $('#radios-methods').radioslider();
+  $('a[href=enable]').click(function(){$r.radioslider('setEnabled');return false});
+  $('a[href=disable]').click(function(){$r.radioslider('setDisabled');return false});
+  $('a[href=value]').click(function(){$r.radioslider('setValue', '3');return false});
+  $('a[href=destroy]').click(function(){$r.radioslider('destroy');return false});
 </script>
+<style>
+.radioslider.extrasuperbig {
+    --dot-size: 4em;
+    --bar-padding: 0.25em;
+}
+</style>
