@@ -105,6 +105,9 @@ $radioslider: (
                 background-color: var(--handle-color);
             }
         }
+
+        // Focus state
+        // &:focus + .radioslider__label {}
     }
 
     // Labels
@@ -213,6 +216,12 @@ $radioslider: (
             &.inverse {
                 background-color: var(--fill-color-inverse);
             }
+        }
+
+        // Focused state
+        &.focused {
+            border-color: hsla(0, 0%, 0%, 0.85);
+            box-shadow: 0 0 0.2em hsla(0, 0%, 0%, 0.2);
         }
     }
 
