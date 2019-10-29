@@ -2,7 +2,7 @@
     'use strict';
 
     var pluginName = 'radioslider',
-        pluginIdentifier = 0,
+        pluginNumber = 0,
         defaults = {
             size:            '', // General slider size
             animation:       true, // Enable fill animation
@@ -54,6 +54,8 @@
      * @param {Object} options
      */
     function Plugin(element, options) {
+        pluginNumber++;
+
         this.options         = $.extend( {}, defaults, options );
         this.$window         = $(window);
         this.$document       = $(document);
@@ -64,7 +66,8 @@
         this.DIRECTION_STYLE = constants.orientation[this.orientation].directionStyle;
         this.COORDINATE      = constants.orientation[this.orientation].coordinate;
 
-        this.identifier      = 'js-' + pluginName + '-' +(pluginIdentifier++);
+        this.number          = pluginNumber;
+        this.identifier      = pluginName + '-' + pluginNumber;
         this.level           = 0; // This means no level selected
         this.value           = null;
         this.levelsCount     = this.$bearer.find('input[type=radio]').length;
@@ -117,7 +120,7 @@
                 ' ' + (options.animation ? options.animationClass : '') +
                 ' ' + (options.size ? options.sliderClass + '_' + options.size : '')
             )
-            .attr('data-radioslider', this.identifier);
+            .attr('data-radioslider', this.number);
 
         // Inputs : add class and level data
         $inputs = $bearer
@@ -322,7 +325,7 @@
             $handle = this.$handle;
 
         // Radio input change
-        $inputs.on('change', function() {
+        $inputs.on('change.' + slider.identifier, function() {
 
             $(this).prop('checked', true);
 
@@ -331,10 +334,10 @@
             }
 
             slider.setSlider();
-            $bearer.trigger('radiochange');
-        }).on('focusin', function() {
+            $bearer.trigger('radiochange', { origin: slider.identifier });
+        }).on('focusin.' + slider.identifier, function() {
             $handle.addClass(slider.options.focusClass);
-        }).on('focusout', function() {
+        }).on('focusout.' + slider.identifier, function() {
             $handle.removeClass(slider.options.focusClass);
         });
 
@@ -363,7 +366,7 @@
 
         $bearer
             .addClass(disabledClass)
-            .trigger('radiodisabled');
+            .trigger('radiodisabled', { origin: this.identifier });
     };
 
     // Enable the slider
@@ -387,7 +390,7 @@
 
         $bearer
             .removeClass(disabledClass)
-            .trigger('radiodenabled');
+            .trigger('radiodenabled', { origin: this.identifier });
     };
 
     // Get current value
@@ -400,7 +403,7 @@
         if (value !== this.value) {
             this.$inputs
                 .filter('[value=' + value + ']')
-                .trigger('click');
+                .trigger('click', { origin: this.identifier });
         }
     };
 
@@ -493,35 +496,42 @@
         return percent;
     };
 
-    // Destroy (WIP)
+    // Destroy
     Plugin.prototype.destroy = function() {
+        var options = this.options;
+
+        // Remove event handlers
         this.$document.off('.' + this.identifier);
         this.$window.off('.' + this.identifier);
-        this.$bearer
-            .off('.' + this.identifier)
-            .removeData('plugin_' + pluginName);
-        this.$inputs.off('change');
+        this.$bearer.off('.' + this.identifier).removeData('plugin_' + pluginName);
+        this.$inputs.off('.' + this.identifier);
 
         // Remove the generated markup
-        this.$bearer.removeClass(
-            this.options.sliderClass +
-            ' ' + this.options[this.orientation + 'Class'] +
-            ' ' + this.options.size
-        );
+        this.$bearer
+            .removeAttr('data-radioslider')
+            .removeClass(
+                options.sliderClass + ' ' +
+                options[this.orientation + 'Class'] + ' ' +
+                options.fitClass + ' ' +
+                options.animationClass + ' ' +
+                options.sliderClass + '_' + options.size
+            );
         this.$dots.remove();
+        this.$bar.remove();
         this.$items.children().unwrap().each(function(){
             var $this = $(this),
                 text;
             $this
                 .removeAttr('data-level')
-                .removeClass(this.options.inputClass + ' ' + this.options.labelClass + ' ' + this.options.textClass);
+                .removeClass(options.inputClass + ' ' + options.labelClass + ' ' + options.textClass);
             if (this.children.length >0 ) {
                 text = $this.children().html();
                 $this.children().remove();
                 $this.html(text);
             }
         });
-        this.$bar.remove();
+        this.$bearer.find('[class=""]').removeAttr('class');
+        
     };
 
     // A really lightweight plugin wrapper around the constructor,
