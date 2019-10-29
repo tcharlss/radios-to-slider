@@ -175,8 +175,8 @@ onSelect     | callback    | null
 
 Method      | Callback | Args
 ----------- | -------- | ----------------
-setDisabled | true     | $levels, $inputs
-setEnabled  | true     | $levels, $inputs
+setDisabled | true     | $labels, $inputs
+setEnabled  | true     | $labels, $inputs
 getValue    | false    | -
 setValue    | false    | string
 destroy     | false    |
