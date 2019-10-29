@@ -33,7 +33,7 @@ Into this:
 ## Installation
 
 * Via [npm](https://www.npmjs.org/) : ```npm install --save radioslider```
-* Download manually on [Github](https://github.com/tcharlss/radioslider/releases)
+* Download manually on [Github](https://github.com/tcharlss/radioslider/releases/tag/v1.0.1-alpha.2)
 
 The script is also hosted on CDNs like [unpkg](https://unpkg.com/radioslider) or [jsdelivr](https://www.jsdelivr.com/package/npm/radioslider?path=dist)
 
