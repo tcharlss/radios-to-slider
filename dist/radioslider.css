@@ -156,9 +156,9 @@
 .radioslider__handle_origin.inverse {
   background-color: var(--fill-color-inverse);
 }
-.radioslider__handle.focused {
-  border-color: rgba(0, 0, 0, 0.85);
-  box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
+.radioslider__handle.focused.focused {
+  border-color: rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 0.4em rgba(0, 0, 0, 0.33);
 }
 .radioslider_horizontal {
   flex-flow: row;
