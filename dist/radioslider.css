@@ -156,6 +156,10 @@
 .radioslider__handle_origin.inverse {
   background-color: var(--fill-color-inverse);
 }
+.radioslider__handle.focused {
+  border-color: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
+}
 .radioslider_horizontal {
   flex-flow: row;
   justify-content: space-between;

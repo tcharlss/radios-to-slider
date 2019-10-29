@@ -35,6 +35,7 @@
             dotUnderClass:   'under',
             inverseClass:    'inverse',
             activeClass:     'active',
+            focusClass:      'focused',
         },
         constants = {
             orientation: {
@@ -321,9 +322,10 @@
 
     // Interaction
     Plugin.prototype.addInteraction = function() {
-        var slider = this,
+        var slider  = this,
             $bearer = this.$bearer,
-            $inputs = this.$inputs;
+            $inputs = this.$inputs,
+            $handle = this.$handle;
 
         // Radio input change
         $inputs.on('change', function() {
@@ -336,6 +338,10 @@
 
             slider.setSlider();
             $bearer.trigger('radiochange');
+        }).on('focusin', function() {
+            $handle.addClass(slider.options.focusClass);
+        }).on('focusout', function() {
+            $handle.removeClass(slider.options.focusClass);
         });
 
     };
