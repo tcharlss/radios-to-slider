@@ -135,6 +135,8 @@ module.exports = function (grunt) {
                     'package.json',
                     'dist'
                 ],
+                push: false,
+                pushTo: 'origin',
                 createTag: false,
                 tagName: 'v%VERSION%',
                 tagMessage: 'Version %VERSION%',
