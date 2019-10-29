@@ -18,12 +18,13 @@ module.exports = function (grunt) {
 
         pkg: require('./package'),
 
+        // Content of banner appended to files
         meta: {
             banner: '/**\n' +
             ' * <%= pkg.title %> <%= pkg.version %>\n' +
-            ' * A jQuery plugin to display radio buttons as a slider.\n' +
+            ' * <%= pkg.description %>.\n' +
             ' * (c) <%= grunt.template.today("yyyy") %> <%= pkg.maintainers[0].name %> / <%= pkg.maintainers[1].name %>\n' +
-            ' * <%= pkg.licenses[0].type %> license\n' +
+            ' * <%= pkg.license %> license\n' +
             ' */\n'
         },
 
@@ -31,7 +32,7 @@ module.exports = function (grunt) {
         watch: {
             compass: {
                 files: ['<%= config.src %>/{,*/}*.{scss,sass}'],
-                tasks: ['compass:dist', 'cssmin:dist']
+                tasks: ['compass:dist', 'postcss:dist', 'cssmin:dist']
             },
 
             jshint: {
@@ -73,6 +74,20 @@ module.exports = function (grunt) {
             }
         },
 
+        // Add post-processors to CSS
+        postcss: {
+            options: {
+                processors: [
+                  require('autoprefixer')({
+                      flexbox: 'no-2009'
+                  }),
+                ]
+            },
+            dist: {
+                src: '<%= config.dist %>/radioslider.css'
+            }
+        },
+
         // Prepend a banner to the files
         concat: {
             options: {
@@ -106,12 +121,51 @@ module.exports = function (grunt) {
             }
         },
 
+        // Increment version
+        bump: {
+            options: {
+                files: [
+                    'bower.json',
+                    'package.json',
+                ],
+                updateConfigs: ['pkg'],
+                commitMessage: 'Release v%VERSION%',
+                commitFiles: [
+                    'bower.json',
+                    'package.json',
+                    'dist'
+                ],
+                createTag: false,
+                tagName: 'v%VERSION%',
+                tagMessage: 'Version %VERSION%',
+                prereleaseName: 'alpha'
+            }
+        }
+
     });
 
     // Build task
-    grunt.registerTask(
+    grunt.registerTask('build', [
+        'compass:dist',
+        'postcss:dist',
+        'jshint',
+        'concat:dist',
+        'uglify:dist',
+        'cssmin:dist'
+    ]);
+
+    // Release task
+    grunt.registerTask('release', [
+        'bump-only',
         'build',
-        ['compass:dist', 'jshint', 'concat:dist', 'uglify:dist', 'cssmin:dist']
-    );
+        'bump-commit'
+    ]);
+
+    // Pre-release task
+    grunt.registerTask('prerelease', [
+        'bump-only:prerelease',
+        'build',
+        'bump-commit'
+    ]);
 
 };
