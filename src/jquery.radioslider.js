@@ -335,7 +335,7 @@
     };
 
     // Disable the slider
-    Plugin.prototype.setDisabled = function(cb) {
+    Plugin.prototype.setDisabled = function(callback) {
         this.options.isDisable = true;
 
         var slider        = this,
@@ -351,8 +351,8 @@
             $this.off('click change');
         });
 
-        if (typeof cb === 'function') {
-            cb($labels, $inputs);
+        if (typeof callback === 'function') {
+            callback($labels, $inputs);
         }
 
         $bearer
@@ -361,7 +361,7 @@
     };
 
     // Enable the slider
-    Plugin.prototype.setEnabled = function(cb) {
+    Plugin.prototype.setEnabled = function(callback) {
         this.options.isDisable = false;
 
         var slider        = this,
@@ -375,8 +375,8 @@
             slider.addInteraction();
         });
 
-        if (typeof cb === 'function') {
-            cb($labels, $inputs);
+        if (typeof callback === 'function') {
+            callback($labels, $inputs);
         }
 
         $bearer
@@ -491,7 +491,6 @@
     Plugin.prototype.destroy = function() {
         this.$document.off('.' + this.identifier);
         this.$window.off('.' + this.identifier);
-
         this.$bearer
             .off('.' + this.identifier)
             .removeData('plugin_' + pluginName);
@@ -509,7 +508,7 @@
                 text;
             $this
                 .removeAttr('data-level')
-                .removeClass('radioslider__input radioslider__label radioslider__text');
+                .removeClass(this.options.inputClass + ' ' + this.options.labelClass + ' ' + this.options.textClass);
             if (this.children.length >0 ) {
                 text = $this.children().html();
                 $this.children().remove();
