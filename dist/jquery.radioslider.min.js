@@ -1,6 +1,6 @@
 /**
- * RadioSlider 1.0.0-alpha.1
- * A jQuery plugin to display radio buttons as a slider.
+ * RadioSlider 1.0.0-alpha.2
+ * A jQuery plugin to display radio buttons as a slider..
  * (c) 2019 tcharlss / Ruben Torres
  * MIT license
  */

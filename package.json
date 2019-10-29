@@ -7,38 +7,45 @@
     "radio",
     "buttons"
   ],
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "author": {
     "name": "tcharlss"
   },
-  "maintainers": [{
-    "name": "tcharlss",
-    "email": "bonjour@bravecassine.com",
-    "url": "https://bravecassine.com"
-  },{
-    "name": "Ruben Torres",
-    "email": "rubentdh@gmail.com",
-    "url": "http://rubentd.com/"
-  }],
-  "licenses": [{
-    "type": "MIT",
-    "url": "https://github.com/tcharlss/radioslider/blob/master/LICENSE"
-  }],
+  "maintainers": [
+    {
+      "name": "tcharlss",
+      "email": "bonjour@bravecassine.com",
+      "url": "https://bravecassine.com"
+    },
+    {
+      "name": "Ruben Torres",
+      "email": "rubentdh@gmail.com",
+      "url": "http://rubentd.com/"
+    }
+  ],
+  "license": "MIT",
   "homepage": "https://tcharlss.github.io/radioslider/",
   "docs": "https://tcharlss.github.io/radioslider/",
   "download": "https://github.com/tcharlss/radioslider/releases",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tcharlss/radioslider.git"
+  },
   "unpkg": "dist/jquery.radioslider.min.js",
   "peerDependencies": {
     "jquery": ">=3.4.1"
   },
   "devDependencies": {
+    "autoprefixer": "^9.7.0",
     "grunt": "^1.0.4",
+    "grunt-bump": "^0.8.0",
     "grunt-contrib-compass": "~1.0.3",
     "grunt-contrib-concat": "~0.5.1",
+    "grunt-contrib-cssmin": "^3.0.0",
     "grunt-contrib-jshint": "^2.1.0",
     "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-contrib-cssmin": "^3.0.0",
+    "grunt-postcss": "^0.9.0",
     "jshint-stylish": "~2.0.1",
     "load-grunt-tasks": "^5.1.0",
     "parallelshell": "^2.0.0",
@@ -50,5 +57,9 @@
   },
   "files": [
     "dist"
+  ],
+  "browserslist": [
+    "last 2 versions",
+    "> 1%"
   ]
 }
