@@ -17,7 +17,7 @@
  */
 @import "mixins";
 $radioslider: (
-    bar-color:  hsl(0, 0%, 90%),
+    bar-color:  hsla(0, 0%, 0%, 0.15),
     fill-color: hsl(220, 100%, 60%),
     fill-color-inverse: hsl(10, 75%, 60%),
     handle-color: hsl(220, 100%, 100%),
