@@ -42,7 +42,7 @@ The script is also hosted on CDNs like [unpkg](https://unpkg.com/radioslider) or
 ```html
 <!-- Load the stylesheet -->
 <head>
-    <link rel="stylesheet" href="path/to/radioslider/radioslider.min.css">
+    <link rel="stylesheet" href="path/to/radioslider.min.css">
 </head>
 
 <!-- Have some radio inputs with their labels -->
@@ -58,8 +58,8 @@ The script is also hosted on CDNs like [unpkg](https://unpkg.com/radioslider) or
 </div>
 
 <!-- Load jQuery and radioslider, then call the function -->
-<script src="path/to/jquery/jquery.min.js"></script>
-<script src="path/to/radioslider/jquery.radioslider.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
+<script src="path/to/jquery.radioslider.min.js"></script>
 <script>
     $(function() {
         var radios = $("#radios").radioslider();
@@ -71,7 +71,7 @@ The script is also hosted on CDNs like [unpkg](https://unpkg.com/radioslider) or
 
 ### Sizes
 
-There are 2 more sizes: `'small'` and `'tiny'`.
+There are 2 extra sizes: `'small'` and `'tiny'`.
 
 **Default:**
 
