@@ -3,7 +3,11 @@
 
 > A jQuery plugin to display radio buttons as a slider.
 
-* Fluid • Accessible • Easily themable • Horizontal & vertical orientation
+* Fluid
+* Accessible
+* Horizontal & vertical orientation 
+* Bidirectional
+* Easily customizable
 * ~13kB gzipped
 
 [Github](https://github.com/tcharlss/radioslider)
