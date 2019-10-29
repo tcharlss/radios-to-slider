@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 26.458333 6.6145835"
+   height="25"
+   width="100"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="radioslider.svg"
+   inkscape:version="1.0beta1 (347022e4f4, 2019-10-27)">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18">
+    <linearGradient
+       id="linearGradient838"
+       inkscape:collect="always">
+      <stop
+         id="stop834"
+         offset="0"
+         style="stop-color:#983ff3;stop-opacity:1" />
+      <stop
+         id="stop836"
+         offset="1"
+         style="stop-color:#3f5cf3;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="3.3074999"
+       x2="16.669001"
+       y1="3.3074999"
+       x1="0"
+       id="linearGradient840"
+       xlink:href="#linearGradient838"
+       inkscape:collect="always" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     inkscape:document-rotation="0"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2490"
+     inkscape:window-height="1023"
+     id="namedview16"
+     showgrid="false"
+     inkscape:zoom="6.4594204"
+     inkscape:cx="41.728701"
+     inkscape:cy="11.763402"
+     inkscape:window-x="70"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <rect
+     ry="3.307"
+     rx="3.307"
+     height="6.615"
+     width="26.458"
+     fill="#e3dbdb"
+     id="rect2"
+     style="fill:#2b2121;fill-opacity:0.2" />
+  <rect
+     style="fill-opacity:1;fill:url(#linearGradient840)"
+     width="16.669"
+     height="6.615"
+     rx="3.307"
+     ry="3.307"
+     fill="#3f40f3"
+     id="rect6" />
+  <circle
+     r="2.514"
+     cy="3.307"
+     cx="22.886"
+     fill="#fff"
+     id="circle8" />
+  <circle
+     style="fill:#ffffff;fill-opacity:0.33000001"
+     cx="3.307"
+     cy="3.307"
+     r="2.514"
+     fill="#fff"
+     fill-opacity=".5"
+     id="circle10" />
+  <circle
+     r="2.514"
+     cy="3.307"
+     cx="13.097"
+     fill="#fff"
+     id="circle12" />
+</svg>
