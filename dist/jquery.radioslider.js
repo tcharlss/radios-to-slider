@@ -1,15 +1,21 @@
-/*prout*/(function($) {
+/**
+ * RadioSlider 1.0.0-dev
+ * A jQuery plugin to display radio buttons as a slider.
+ * (c) 2019 tcharlss / Ruben Torres
+ * MIT license
+ */
+(function($) {
     'use strict';
 
     var pluginName = 'radioslider',
         pluginIdentifier = 0,
         defaults = {
-            size:            '',
-            animation:       true,
-            isDisabled:      false,
+            size:            '', // General slider size
+            animation:       true, // Enable fill animation
+            isDisabled:      false, // Make the inputs disabled
             fillOffset:      null, // Offset the fill center
-            fillOrigin:      null, // Fill left and right from origin
-            fit:             false, // Makes the dots fit the edges
+            fillOrigin:      null, // Make the fill bidirectional
+            fit:             false, // Fit the edges
             onSelect:        null,
             orientation:     'horizontal',
             sliderClass:     'radioslider',
@@ -28,6 +34,7 @@
             animationClass:  'radioslider_animated',
             dotUnderClass:   'under',
             inverseClass:    'inverse',
+            activeClass:     'active',
         },
         constants = {
             orientation: {
@@ -195,7 +202,7 @@
                 highLevel,
                 dotPos,
                 originPos,
-                handleOffset,
+                // handleOffset,
                 barOffset,
                 fillDimension,
                 fillDirection,
@@ -205,8 +212,8 @@
             currentLevel     = Number($inputChecked.attr('data-level'));
             currentValue     = this.getValueFromLevel(currentLevel);
             dotPos           = this.getPositionFromValue(currentValue);
-            handleOffset     = this.getHandleOffset(); // half handle height/width
             barOffset        = this.getBarOffset(); // half bar height/width
+            // handleOffset     = this.getHandleOffset(); // half handle height/width
 
             // Set fill dimensions and position
             // If different origin
@@ -278,7 +285,7 @@
                 $handle[0].style[this.DIRECTION_STYLE] = this.dimensionToPercent(dotPos/* - handleOffset*/) + '%';
             }
 
-            // Update value
+            // Update globals
             this.level = currentLevel;
             this.value = currentValue;
 
@@ -323,8 +330,8 @@
 
             $(this).prop('checked', true);
 
-            if (slider.options.onChange) {
-                slider.options.onChange($(this), [$inputs]);
+            if (slider.options.onSelect) {
+                slider.options.onSelect($(this), [$inputs]);
             }
 
             slider.setSlider();
@@ -334,7 +341,7 @@
     };
 
     // Disable the slider
-    Plugin.prototype.setDisabled = function(cb) {
+    Plugin.prototype.setDisabled = function(callback) {
         this.options.isDisable = true;
 
         var slider        = this,
@@ -350,8 +357,8 @@
             $this.off('click change');
         });
 
-        if (typeof cb === 'function') {
-            cb($labels, $inputs);
+        if (typeof callback === 'function') {
+            callback($labels, $inputs);
         }
 
         $bearer
@@ -360,7 +367,7 @@
     };
 
     // Enable the slider
-    Plugin.prototype.setEnabled = function(cb) {
+    Plugin.prototype.setEnabled = function(callback) {
         this.options.isDisable = false;
 
         var slider        = this,
@@ -374,8 +381,8 @@
             slider.addInteraction();
         });
 
-        if (typeof cb === 'function') {
-            cb($labels, $inputs);
+        if (typeof callback === 'function') {
+            callback($labels, $inputs);
         }
 
         $bearer
@@ -434,6 +441,7 @@
     };
 
     // Get the position offset of the handle (eg. half its length)
+    /*
     Plugin.prototype.getHandleOffset = function() {
         var handleDimensions,
             handleDimension,
@@ -449,6 +457,7 @@
 
         return offset;
     };
+    */
 
     // Get the position offset of the bar (eg. half its length)
     Plugin.prototype.getBarOffset = function() {
@@ -488,7 +497,6 @@
     Plugin.prototype.destroy = function() {
         this.$document.off('.' + this.identifier);
         this.$window.off('.' + this.identifier);
-
         this.$bearer
             .off('.' + this.identifier)
             .removeData('plugin_' + pluginName);
@@ -506,7 +514,7 @@
                 text;
             $this
                 .removeAttr('data-level')
-                .removeClass('radioslider__input radioslider__label radioslider__text');
+                .removeClass(this.options.inputClass + ' ' + this.options.labelClass + ' ' + this.options.textClass);
             if (this.children.length >0 ) {
                 text = $this.children().html();
                 $this.children().remove();

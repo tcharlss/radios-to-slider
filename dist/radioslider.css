@@ -30,7 +30,7 @@
 
 .radioslider {
   /* Color variables */
-  --bar-color: #e6e6e6;
+  --bar-color: rgba(0, 0, 0, 0.15);
   --fill-color: #3377ff;
   --fill-color-inverse: #e6664d;
   --handle-color: white;
@@ -118,7 +118,7 @@
   left: 0;
   right: 0;
   border-radius: 99em;
-  background-color: #e6e6e6;
+  background-color: rgba(0, 0, 0, 0.15);
   background-color: var(--bar-color);
 }
 .radioslider__bar.inverse .radioslider__fill {
