@@ -4,10 +4,10 @@
     "title": "RadioSlider",
     "version": "1.0.0-alpha.2",
     "authors": [
-        "Ruben Torres <rubentdh@gmail.com>",
-        "tcharlss <bonjour@bravecassine.com>"
+        "tcharlss <bonjour@bravecassine.com>",
+        "Ruben Torres <rubentdh@gmail.com>"
     ],
-    "main": "dist/jquery.radioslider.min.js",
+    "main": "dist/jquery.radioslider.js",
     "keywords": [
         "slider",
         "radio",
