@@ -214,7 +214,7 @@ Vertical orientation is supported, the values goes from bottom to top.
 
 In some cases you'll need to give the slider container a fixed height, otherwise the slider will shrink.
 
-<div id="radios-vertical">
+<div id="radios-vertical" style="height:15em">
 <input id="opt1i" name="i" type="radio" value="1">
 <label for="opt1i">1</label>
 <input id="opt2i" name="i" type="radio" value="2" checked>
