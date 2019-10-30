@@ -312,13 +312,19 @@ $radioslider: (
        Disabled
        ======== */
 
-    &_disabled {
-        .radioslider__input,
-        .radioslider__label {
+    &.disabled {
+        filter: grayscale(90);
+    }
+    &.disabled .radioslider__item,
+    .radioslider__item.disabled {
+        cursor: not-allowed;
+
+        .radioslider__label,
+        .radioslider__input {
             pointer-events: none;
         }
-        .radioslider__item {
-            cursor: not-allowed;
+        .radioslider__text {
+            opacity: 0.33;
         }
     }
 
