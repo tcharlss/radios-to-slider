@@ -362,10 +362,12 @@
 
         // Add disabled attribute and cancel click and change events
         $.merge($labels, $inputs).each(function() {
-            var $this = $(this);
-
-            $this.prop('disabled', true);
-            $this.off('click change');
+            $(this).off('click change');
+        });
+        $inputs.each(function() {
+            $(this)
+                .prop('disabled', true)
+                .parent().addClass(disabledClass);
         });
 
         if (typeof callback === 'function') {
@@ -373,9 +375,8 @@
         }
 
         $bearer
-            .trigger('radiodisabled', { origin: this.identifier })
-            .addClass(disabledClass);
-        $inputs.addClass(disabledClass);
+            .addClass(disabledClass)
+            .trigger('radiodisabled', { origin: this.identifier });
     };
 
     // Enable the slider
@@ -389,9 +390,13 @@
             disabledClass = slider.options.disabledClass;
 
         // Remove the disabled attribute except those which were already here on init
-        $.merge($labels, $inputs).not(slider.$inputsDisabled).each(function() {
-            $(this).prop('disabled', false);
+        $inputs.not(slider.$inputsDisabled).each(function() {
+            $(this)
+                .prop('disabled', false)
+                .parent().removeClass(disabledClass);
         });
+
+        // Add interaction back
         slider.addInteraction();
 
         if (typeof callback === 'function') {
@@ -401,7 +406,6 @@
         $bearer
             .trigger('radiodenabled', { origin: this.identifier })
             .removeClass(disabledClass);
-        $inputs.not(slider.$inputsDisabled).removeClass(disabledClass);
     };
 
     // Get current value
