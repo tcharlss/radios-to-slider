@@ -122,6 +122,9 @@ $radioslider: (
             .radioslider__dot {
                 // transform: scale(1.25);
                 box-shadow: 0 0.1em 0.2em hsla(0, 0%, 0%, 0.33);
+                &.under {
+                    opacity: 1;
+                }
             }
         }
 
@@ -139,7 +142,7 @@ $radioslider: (
         height: var(--dot-size);
         background-color: white;
         border-radius: 99em;
-        transition: all 0.1s;
+        transition: all 0.2s;
 
         // Under the fill bar
         &.under {
