@@ -56,10 +56,10 @@
     function Plugin(element, options) {
         pluginNumber++;
 
-        this.options         = $.extend( {}, defaults, options );
         this.$window         = $(window);
         this.$document       = $(document);
         this.$bearer         = $(element);
+        this.options         = $.extend( {}, defaults, options, this.$bearer.data() );
         this.orientation     = this.options.orientation;
         this.DIMENSION       = constants.orientation[this.orientation].dimension;
         this.DIRECTION       = constants.orientation[this.orientation].direction;
