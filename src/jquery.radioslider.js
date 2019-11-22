@@ -213,6 +213,10 @@
                 fillDirection,
                 input;
 
+            // Put active class
+            $inputChecked.next('.'+options.labelClass).addClass(options.activeClass).parents('.'+options.itemClass).addClass(options.activeClass);
+            $inputs.not($inputChecked).next('.'+options.labelClass).removeClass(options.activeClass).parents('.'+options.itemClass).removeClass(options.activeClass);
+
             // Get elements dimensions
             currentLevel     = Number($inputChecked.attr('data-level'));
             currentValue     = this.getValueFromLevel(currentLevel);
