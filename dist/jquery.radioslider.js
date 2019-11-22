@@ -12,7 +12,7 @@
         defaults = {
             size:            '', // General slider size
             animation:       true, // Enable fill animation
-            isDisabled:      false, // Make the inputs disabled
+            isDisabledd:      false, // Make the inputs disabled
             fillOffset:      null, // Offset the fill center
             fillOrigin:      null, // Make the fill bidirectional
             fit:             false, // Fit the edges
@@ -29,13 +29,13 @@
             handleClass:     'radioslider__handle',
             horizontalClass: 'radioslider_horizontal',
             verticalClass:   'radioslider_vertical',
-            disabledClass:   'radioslider_disabled',
             fitClass:        'radioslider_fit',
             animationClass:  'radioslider_animated',
             dotUnderClass:   'under',
             inverseClass:    'inverse',
             activeClass:     'active',
             focusClass:      'focused',
+            disabledClass:   'disabled',
         },
         constants = {
             orientation: {
@@ -62,10 +62,10 @@
     function Plugin(element, options) {
         pluginNumber++;
 
-        this.options         = $.extend( {}, defaults, options );
         this.$window         = $(window);
         this.$document       = $(document);
         this.$bearer         = $(element);
+        this.options         = $.extend( {}, defaults, options, this.$bearer.data() );
         this.orientation     = this.options.orientation;
         this.DIMENSION       = constants.orientation[this.orientation].dimension;
         this.DIRECTION       = constants.orientation[this.orientation].direction;
@@ -102,7 +102,7 @@
         this.addBase();
         this.setSlider();
         this.addInteraction();
-        if (this.options.isDisabled) {
+        if (this.options.isDisabledd) {
             this.setDisabled();
         }
     };
@@ -129,6 +129,7 @@
             .attr('data-radioslider', this.number);
 
         // Inputs : add class and level data
+        // Store the initial disabled inputs
         $inputs = $bearer
             .find('> input[type=radio]')
             .each(function(i) {
@@ -137,6 +138,7 @@
                     .attr('data-level', i+1);
             });
         this.$inputs = $inputs;
+        this.$inputsDisabled = this.$bearer.find('> input[type=radio][disabled]');
 
         // Labels : add class and level data, insert dots, wrap text
         $labels = $bearer
@@ -173,9 +175,14 @@
                 .nextUntil('input')
                 .addBack()
                 .wrapAll($item);
+            // Add disabled class
+            if ($(this).attr('disabled') === 'disabled') {
+                $(this).parent().addClass(options.disabledClass);
+            }
         });
         $items = $bearer.find('.' + options.itemClass);
         this.$items = $items;
+        // If vertical, inverse order
         if (this.orientation === 'vertical') {
             $items.each(function(i, el){
                 $bearer.prepend(el);
@@ -211,6 +218,10 @@
                 fillDimension,
                 fillDirection,
                 input;
+
+            // Put active class
+            $inputChecked.next('.'+options.labelClass).addClass(options.activeClass).parents('.'+options.itemClass).addClass(options.activeClass);
+            $inputs.not($inputChecked).next('.'+options.labelClass).removeClass(options.activeClass).parents('.'+options.itemClass).removeClass(options.activeClass);
 
             // Get elements dimensions
             currentLevel     = Number($inputChecked.attr('data-level'));
@@ -351,7 +362,7 @@
 
     // Disable the slider
     Plugin.prototype.setDisabled = function(callback) {
-        this.options.isDisable = true;
+        this.options.isDisabled = true;
 
         var slider        = this,
             $bearer       = slider.$bearer,
@@ -359,11 +370,14 @@
             $inputs       = slider.$inputs,
             disabledClass = slider.options.disabledClass;
 
+        // Add disabled attribute and cancel click and change events
         $.merge($labels, $inputs).each(function() {
-            var $this = $(this);
-
-            $this.prop('disabled', true);
-            $this.off('click change');
+            $(this).off('click change');
+        });
+        $inputs.each(function() {
+            $(this)
+                .prop('disabled', true)
+                .parent().addClass(disabledClass);
         });
 
         if (typeof callback === 'function') {
@@ -377,7 +391,7 @@
 
     // Enable the slider
     Plugin.prototype.setEnabled = function(callback) {
-        this.options.isDisable = false;
+        this.options.isDisabled = false;
 
         var slider        = this,
             $bearer       = slider.$bearer,
@@ -385,18 +399,23 @@
             $inputs       = slider.$inputs,
             disabledClass = slider.options.disabledClass;
 
-        $.merge($labels, $inputs).each(function() {
-            $(this).prop('disabled', false);
-            slider.addInteraction();
+        // Remove the disabled attribute except those which were already here on init
+        $inputs.not(slider.$inputsDisabled).each(function() {
+            $(this)
+                .prop('disabled', false)
+                .parent().removeClass(disabledClass);
         });
+
+        // Add interaction back
+        slider.addInteraction();
 
         if (typeof callback === 'function') {
             callback($labels, $inputs);
         }
 
         $bearer
-            .removeClass(disabledClass)
-            .trigger('radiodenabled', { origin: this.identifier });
+            .trigger('radiodenabled', { origin: this.identifier })
+            .removeClass(disabledClass);
     };
 
     // Get current value

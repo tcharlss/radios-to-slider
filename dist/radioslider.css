@@ -98,6 +98,9 @@
   -webkit-box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.33);
           box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.33);
 }
+.radioslider__label:hover .radioslider__dot.under, .radioslider__label:focus .radioslider__dot.under, .radioslider__label:focus-within .radioslider__dot.under {
+  opacity: 1;
+}
 .radioslider__dot {
   display: block;
   width: 1.5em;
@@ -106,8 +109,8 @@
   height: var(--dot-size);
   background-color: white;
   border-radius: 99em;
-  -webkit-transition: all 0.1s;
-  transition: all 0.1s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 .radioslider__dot.under {
   opacity: 0.2;
@@ -171,7 +174,7 @@
 }
 .radioslider_horizontal {
   -ms-flex-flow: row;
-  flex-flow: row;
+      flex-flow: row;
   -ms-flex-pack: justify;
       justify-content: space-between;
   padding-bottom: 0;
@@ -183,7 +186,7 @@
 }
 .radioslider_horizontal .radioslider__label {
   -ms-flex-flow: column;
-  flex-flow: column;
+      flex-flow: column;
   -ms-flex-align: center;
       align-items: center;
 }
@@ -206,7 +209,7 @@
 }
 .radioslider_vertical {
   -ms-flex-flow: column;
-  flex-flow: column;
+      flex-flow: column;
   -ms-flex-align: start;
       align-items: flex-start;
   height: 100%;
@@ -222,7 +225,7 @@
 }
 .radioslider_vertical .radioslider__label {
   -ms-flex-flow: row;
-  flex-flow: row;
+      flex-flow: row;
 }
 .radioslider_vertical .radioslider__text {
   margin-left: 1.25em;
@@ -247,12 +250,24 @@
   -webkit-transition: 0.2s ease-out;
   transition: 0.2s ease-out;
 }
-.radioslider_disabled .radioslider__input,
-.radioslider_disabled .radioslider__label {
+.radioslider.disabled {
+  -webkit-filter: grayscale(90);
+          filter: grayscale(90);
+}
+.radioslider.disabled .radioslider__item,
+.radioslider .radioslider__item.disabled {
+  cursor: not-allowed;
+}
+.radioslider.disabled .radioslider__item .radioslider__label,
+.radioslider.disabled .radioslider__item .radioslider__input,
+.radioslider .radioslider__item.disabled .radioslider__label,
+.radioslider .radioslider__item.disabled .radioslider__input {
   pointer-events: none;
 }
-.radioslider_disabled .radioslider__item {
-  cursor: not-allowed;
+.radioslider.disabled .radioslider__item .radioslider__text,
+.radioslider .radioslider__item.disabled .radioslider__text {
+  opacity: 0.33;
+  text-decoration: line-through;
 }
 .radioslider_fit .radioslider__item {
   -ms-flex-positive: 0;
