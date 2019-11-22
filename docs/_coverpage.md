@@ -8,7 +8,7 @@
 * Horizontal & vertical orientation 
 * Bidirectional
 * Easily customizable
-* ~13kB gzipped
+* ~4.2kB gzipped
 
 [Github](https://github.com/tcharlss/radioslider)
 [Getting started](#radioslider)

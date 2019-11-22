@@ -231,6 +231,25 @@ $("#radios").radioslider({
 });
 ```
 
+## Theming
+
+To quickly change the basic look, there are a few CSS variables you can override:
+
+```css
+.radioslider {
+  /* Color variables */
+  --bar-color: rgba(0, 0, 0, 0.15);
+  --fill-color: #3377ff;
+  --fill-color-inverse: #e6664d;
+  --handle-color: white;
+  /* Size variables */
+  --dot-size: 1.5em;
+  --bar-padding: 0.25em;
+  --bar-margin-bottom: 1em;
+  --bar-thickness: calc(var(--bar-padding)*2 + var(--dot-size));
+}
+```
+
 
 ## Methods
 
@@ -273,6 +292,13 @@ Call the methods like this:
 </div>
 
 ## Options
+
+You can pass the options as a parameter when you call the script, and also as data attributes on the HTML element.
+Remember that data attributes can't have uppercase letters, so change them to `-`, eg: `fillOrigin` translate to `data-fill-origin`.
+
+```html
+<div id="radios" data-size="small" data-fill-origin="3" data-orientation="vertical">
+```
 
 Option       | Values      | Default
 ------------ | ----------- | --------
