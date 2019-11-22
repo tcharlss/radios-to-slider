@@ -2,7 +2,7 @@
     "name": "radioslider",
     "description": "A jQuery plugin to display radio buttons as a slider.",
     "title": "RadioSlider",
-    "version": "1.0.0-alpha.2",
+    "version": "1.0.0-beta.1",
     "authors": [
         "tcharlss <bonjour@bravecassine.com>",
         "Ruben Torres <rubentdh@gmail.com>"

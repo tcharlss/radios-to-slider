@@ -1,5 +1,5 @@
 ![Logo](/_medias/radioslider.svg)
-# RadioSlider <small>1.0.0-alpha.2</small>
+# RadioSlider <small>1.0.0-beta.1</small>
 
 > A jQuery plugin to display radio buttons as a slider.
 
